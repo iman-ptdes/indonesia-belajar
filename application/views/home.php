@@ -23,11 +23,65 @@
         <script type="text/javascript" src="<?= base_url('cssjs') ?>/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="<?= base_url('cssjs') ?>/bootstrap-datepicker/locales/bootstrap-datepicker.id.min.js"></script>
         <script type="text/javascript" src="<?= base_url('cssjs') ?>/pekeupload/pekeUpload.min.js"></script>
+            
+        <script src="<?= base_url('cssjs') ?>/startbootstrap-sb-admin-2-1.0.7/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="<?= base_url('cssjs') ?>/startbootstrap-sb-admin-2-1.0.7/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+        <script src="<?= base_url('cssjs') ?>/startbootstrap-sb-admin-2-1.0.7/bower_components/raphael/raphael-min.js"></script>
+        <script src="<?= base_url('cssjs') ?>/startbootstrap-sb-admin-2-1.0.7/bower_components/morrisjs/morris.min.js"></script>
+        
+        <link rel="stylesheet" href="<?= base_url('cssjs') ?>/startbootstrap-sb-admin-2-1.0.7/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="<?= base_url('cssjs') ?>/startbootstrap-sb-admin-2-1.0.7/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+        <link rel="stylesheet" href="<?= base_url('cssjs') ?>/startbootstrap-sb-admin-2-1.0.7/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+        <link rel="stylesheet" href="<?= base_url('cssjs') ?>/startbootstrap-sb-admin-2-1.0.7/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="<?= base_url('cssjs') ?>/startbootstrap-sb-admin-2-1.0.7/bower_components/morrisjs/morris.css" rel="stylesheet">
+
 
 </head>
 
 <body id="page-top" class="index">
-
+    <script>
+$(function() {
+    Morris.Bar({
+        element: 'morris-bar-chart',
+        data: [{
+            y: '<?php echo $graph[0]['lokasi']?>',
+            a: <?php echo $graph[0][0]?>,
+            b: <?php echo $graph[0][1]?>,
+            c: <?php echo $graph[0][2]?>,
+            d: <?php echo $graph[0][3]?>
+        }, {
+            y: '<?php echo $graph[1]['lokasi']?>',
+            a: <?php echo $graph[1][0]?>,
+            b: <?php echo $graph[1][1]?>,
+            c: <?php echo $graph[1][2]?>,
+            d: <?php echo $graph[1][3]?>
+        }, {
+            y: '<?php echo $graph[2]['lokasi']?>',
+            a: <?php echo $graph[2][0]?>,
+            b: <?php echo $graph[2][1]?>,
+            c: <?php echo $graph[2][2]?>,
+            d: <?php echo $graph[2][3]?>
+        }, {
+            y: '<?php echo $graph[3]['lokasi']?>',
+            a: <?php echo $graph[3][0]?>,
+            b: <?php echo $graph[3][1]?>,
+            c: <?php echo $graph[3][2]?>,
+            d: <?php echo $graph[3][3]?>
+        }, {
+            y: '<?php echo $graph[4]['lokasi']?>',
+            a: <?php echo $graph[4][0]?>,
+            b: <?php echo $graph[4][1]?>,
+            c: <?php echo $graph[4][2]?>,
+            d: <?php echo $graph[4][3]?>
+        }],
+        xkey: 'y',
+        ykeys: ['a', 'b', 'c', 'd'],
+        labels: ['SD dan Sederajat', 'SMP dan Sederajat', 'SMA dan Sederajat', 'Lainnya'],
+        hideHover: 'auto',
+        resize: true
+    });
+});
+    </script>
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top" style="background-color:#0c5684;">
         <div class="container">
@@ -68,6 +122,10 @@
             <div class="row">
                 <div class="col-md-4 col-xs-12">
                     <div style="margin-top:30px;">
+                        <h4>Total Donasi : <?php echo $total_donasi;?></h4>
+                        <h4>Jumlah Anak Putus Sekolah yang Terdata : <?php echo $total_anak;?></h4>
+                        <h4>5 Besar Anak Putus Sekolah Per Daerah</h4>
+                        <div id="morris-bar-chart"></div>
                         <center><img class="img-responsive" src="<?php echo base_url('images/indonesia-belajar.png')?>"></center>
                     </div>
                 </div>

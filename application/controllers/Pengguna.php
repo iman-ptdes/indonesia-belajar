@@ -96,6 +96,56 @@ class Pengguna extends CI_Controller {
 		</script>";
         }
         //$data['label_menu'] = 'Klien';
+        $query_donasi = $this->db->query('SELECT SUM(jumlah) as total_donasi FROM donasi WHERE status=1');
+        $row_donasi = $query_donasi->row();
+        $data['total_donasi'] = !empty($row_donasi->total_donasi)?$row_donasi->total_donasi:0;
+        $query_donasi = $this->db->query('SELECT COUNT(id_anak) as total_anak FROM anak WHERE status_bersekolah<>\'Masih Sekolah\'');
+        $row_donasi = $query_donasi->row();
+        $data['total_anak'] = !empty($row_donasi->total_anak)?$row_donasi->total_anak:0;
+        $graph[0][0] = 0;
+        $graph[0][1] = 0;
+        $graph[0][2] = 0;
+        $graph[0][3] = 0;
+        $graph[0]['lokasi'] = '';
+        $graph[1][0] = 0;
+        $graph[1][1] = 0;
+        $graph[1][2] = 0;
+        $graph[1][3] = 0;
+        $graph[1]['lokasi'] = '';
+        $graph[2][0] = 0;
+        $graph[2][1] = 0;
+        $graph[2][2] = 0;
+        $graph[2][3] = 0;
+        $graph[2]['lokasi'] = '';
+        $graph[3][0] = 0;
+        $graph[3][1] = 0;
+        $graph[3][2] = 0;
+        $graph[3][3] = 0;
+        $graph[3]['lokasi'] = '';
+        $graph[4][0] = 0;
+        $graph[4][1] = 0;
+        $graph[4][2] = 0;
+        $graph[4][3] = 0;
+        $graph[4]['lokasi'] = '';
+        $query_graph = $this->db->query('SELECT COUNT(id_anak) as jumlah_anak, kota, provinsi FROM anak WHERE status_bersekolah<>\'Masih Sekolah\' GROUP BY kota, provinsi ORDER BY jumlah_anak DESC LIMIT 5');
+        $i = 0;
+        foreach ($query_graph->result() as $row_graph){
+            $graph[$i]['lokasi'] = $row_graph->kota.', '.$row_graph->provinsi;
+            $query2_graph = $this->db->query('SELECT COUNT(id_anak) as jumlah_anak, tingkat_sekolah FROM anak WHERE status_bersekolah<>\'Masih Sekolah\' AND kota = \''.$row_graph->kota.'\' AND provinsi = \''.$row_graph->provinsi.'\' GROUP BY tingkat_sekolah ASC');
+            foreach ($query2_graph->result() as $row2_graph){
+                if ($row2_graph->tingkat_sekolah=='SD dan Sederajat'){
+                    $graph[$i][0] = $row2_graph->jumlah_anak;
+                } else if ($row2_graph->tingkat_sekolah=='SMP dan Sederajat'){
+                    $graph[$i][1] = $row2_graph->jumlah_anak;
+                } else if ($row2_graph->tingkat_sekolah=='SMA dan Sederajat'){
+                    $graph[$i][2] = $row2_graph->jumlah_anak;
+                } else {
+                    $graph[$i][3] = $row2_graph->jumlah_anak;
+                }
+            }
+            $i++;
+        }
+        $data['graph'] = $graph;
         $data['jenis_pengguna'] = $this->form_option->jenis_pengguna('');
         $data['group_pengguna'] = $this->form_option->group_pengguna('');
         $data['jenis_identitas'] = $this->form_option->jenis_identitas('');
