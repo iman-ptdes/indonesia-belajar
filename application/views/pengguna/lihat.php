@@ -18,7 +18,7 @@
 
 <div class="col-lg-10 col-lg-offset-1">
     <div class="page-header">
-        <h2>Data Anak</h2>
+        <h2>Data Pengguna</h2>
     </div>
     <?= form_open('') ?>	
     <div class="row" style="padding-left:20px;padding-right:20px">
