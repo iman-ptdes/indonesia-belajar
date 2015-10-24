@@ -357,7 +357,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy; TimDesember2015
+                        <b>Tim Desember untuk Hackathon Merdeka 2.0</b>
                     </div>
                 </div>
             </div>
