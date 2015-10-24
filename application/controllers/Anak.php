@@ -154,13 +154,13 @@ class Anak extends CI_Controller {
                     //$data = array('upload_data' => $this->upload->data());
                     // print_r($this->upload->data());
                     echo "<script>alert('Berhasil Tambah Data Anak');
-                location.href = '" . site_url("anak/detail/") . "/$hash_id';
+                location.href = '" . site_url("anak/detail") . "/$hash_id';
                </script>";
                 } else {
                     //$error = array('error' => $this->upload->display_errors());\
                     //print_r($error);
                     echo "<script>alert('Berhasil Tambah Data Anak Tetapi Gagal Upload Poto');
-                location.href = '" . site_url("anak/detail/") . "/$hash_id';
+                location.href = '" . site_url("anak/detail") . "/$hash_id';
                </script>";
                 }
             } else {
