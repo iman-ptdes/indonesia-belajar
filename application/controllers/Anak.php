@@ -97,7 +97,7 @@ class Anak extends CI_Controller {
 
         $nik = $this->input->post('nik');
         $data_check_nik = "nik = '$nik'";
-        $query1 = $this->db_model->get('pengguna', 'id_anak', $data_check_nik);
+        $query1 = $this->db_model->get('anak', 'nik', $data_check_nik);
         if ($query1->num_rows() > 0) {
             echo "<script>alert('NIK sudah ada');
                 location.href = '" . site_url("anak/tambah") . "';
