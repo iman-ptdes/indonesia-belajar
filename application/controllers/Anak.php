@@ -396,6 +396,10 @@ class Anak extends CI_Controller {
         $jenis_sekolah = '';
         $tingkat_sekolah = '';
         $status_bersekolah = '';
+        $id_pengguna = $this->session->userdata('id_pengguna');
+        if ($this->session->userdata('id_pengguna_group') != 2) {
+            $id_pengguna = '';
+        }
         $jumlah = 0;
         if ($this->input->post('nama') != '') {
             $nama = $this->input->post('nama');
