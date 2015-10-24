@@ -112,11 +112,4 @@
         </table>
          <a class="btn btn-success" href="<?= base_url() ?>index.php/pengguna/detail/<?= md5(sha1($row->id_pengguna)) ?>">Lihat Data Pengentri</a>
     </div>
-
-
-
 </div>
-
-
-
-
