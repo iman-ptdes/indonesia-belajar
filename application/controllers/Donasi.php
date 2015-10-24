@@ -14,8 +14,10 @@ class Donasi extends CI_Controller {
     }
 
     public function index(){
-        if ($this->session->userdata('id_pengguna_group')=='2'){
-            $where = 'AND pengguna.id_pengguna='.$this->$this->sesison->userdata('id_pengguna');
+        if ($this->session->userdata('id_pengguna_group')=='3'){
+            $where = 'AND pengguna.id_pengguna='.$this->session->userdata('id_pengguna');
+        } else if ($this->session->userdata('id_pengguna_group')=='2'){
+            $where = 'AND anak.id_pengguna='.$this->session->userdata('id_pengguna');
         } else {
             $where = '';
         }
@@ -26,6 +28,31 @@ class Donasi extends CI_Controller {
         $data['data'] = $query->result();
         $data['jumlah'] = $query->num_rows();
         $data['content'] = $this->load->view('donasi/list_donasi', $data, true);
+        $this->load->view('main_template', $data);
+    }
+    
+    public function konfirmasi(){
+        if ($this->session->userdata('id_pengguna_group')=='3'){
+            $where = 'AND pengguna.id_pengguna='.$this->$this->sesison->userdata('id_pengguna');
+        } else if ($this->session->userdata('id_pengguna_group')=='2'){
+            $where = 'AND anak.id_pengguna='.$this->$this->sesison->userdata('id_pengguna');
+        } else {
+            $where = '';
+        }
+        $query1 = $this->db->query('SELECT donasi.*, pengguna.nama as nama_donatur, anak.nama as nama_anak FROM donasi 
+            LEFT JOIN pengguna ON donasi.id_pengguna=pengguna.id_pengguna
+            LEFT JOIN anak ON donasi.id_anak=anak.id_anak WHERE donasi.status=0 '.$where.' ORDER BY tgl_donasi DESC' );
+
+        $data['data1'] = $query1->result();
+        $data['jumlah1'] = $query1->num_rows();
+        
+        $query2 = $this->db->query('SELECT donasi.*, pengguna.nama as nama_donatur, anak.nama as nama_anak FROM donasi 
+            LEFT JOIN pengguna ON donasi.id_pengguna=pengguna.id_pengguna
+            LEFT JOIN anak ON donasi.id_anak=anak.id_anak WHERE donasi.status=1 '.$where.' ORDER BY tgl_donasi DESC' );
+
+        $data['data2'] = $query2->result();
+        $data['jumlah2'] = $query2->num_rows();
+        $data['content'] = $this->load->view('donasi/list_konfirmasi', $data, true);
         $this->load->view('main_template', $data);
     }
     
