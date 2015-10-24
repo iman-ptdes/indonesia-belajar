@@ -28,9 +28,9 @@ class Form_option {
      public function jenis_sekolah($option) {
         $option = array(
             '' => 'Pilih jenis sekolah',
-            'Sekolah Formal Kemdikbud' => 'Sekolah Formal Kemdikbud',
-            'Sekolah Kemenag' => 'Sekolah Kemenag',
-            'Sekolah Non Formal Kemdikbud' => 'Sekolah Non Formal Kemdikbud',
+            'Sekolah Formal Kemdikbud' => 'Sekolah Formal Kemdikbud (SD SMP SMA SMK)',
+            'Sekolah Kemenag' => 'Sekolah Kemenag (MI MTs MA)',
+            'Sekolah Non Formal Kemdikbud' => 'Sekolah Non Formal Kemdikbud (Pendidikan Masyarakat)',
             'Sekolah Lainnya' => 'Sekolah Lainnya',
         );
         return $option;
