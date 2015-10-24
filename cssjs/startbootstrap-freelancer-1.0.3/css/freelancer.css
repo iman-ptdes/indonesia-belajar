@@ -111,8 +111,8 @@ header .intro-text .skills {
 
 @media(min-width:768px) {
     header .container {
-        padding-top: 75px;
-        padding-bottom: 10px;
+       /* padding-top: 75px;
+        padding-bottom: 10px; */
     }
 
     header .intro-text .name {
@@ -480,3 +480,4 @@ footer .footer-below {
 .font-biru {
     color: #2C3E50;
 }
+
