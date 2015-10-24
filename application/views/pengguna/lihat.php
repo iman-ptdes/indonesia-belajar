@@ -56,7 +56,7 @@
 <div class="row">
     <div class="panel panel-default">
         <div class="panel-heading">
-            Data Tabel Anak
+            Data Tabel Pngguna
         </div>
             <!-- /.row (nested) -->
             <div class="panel-body">
@@ -65,7 +65,7 @@
                     <table class="table table-hover" id="data_pengguna">
                         <thead>
                             <tr>
-                                <th data-field="Anak"></th>
+                                <th data-field="Pengguna"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -95,14 +95,15 @@
                                             <div class="row">
                                             <div class="col-lg-6">
                                                 <h4><?php echo isset($row->nama) ? $row->nama : ''; ?></h4>
-                                                
+                                                <p style="font-size:12pt;">
+                                                    <?php echo isset($row->jenis_pengguna) ? $row->jenis_pengguna : ''; ?>
+                                                </p>
                                                 <p style="font-size:12pt;">
                                                     <?php echo isset($row->alamat) ? $row->alamat : ''; ?>
                                                 </p>
                                                 <p style="font-size:12pt;">
                                                     <?php echo isset($row->kota) ? $row->kota . ', ' : ''; ?><?php echo isset($row->provinsi) ? $row->provinsi : ''; ?><br/>
                                                 </p>
-                                                
                                                 <p>
                                                     <a href="<?= base_url() ?>index.php/pengguna/detail/<?= md5(sha1($row->id_pengguna)) ?>" class="btn btn-primary">Detail</a>&nbsp;
                                                     <?php if ($this->session->userdata('id_pengguna_group') == 1) { ?>
