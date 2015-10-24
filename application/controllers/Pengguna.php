@@ -167,9 +167,9 @@ class Pengguna extends CI_Controller {
         } else {
             date_default_timezone_set('Asia/Jakarta');
             if ($this->input->post('group_pengguna') == '2') {
-                $status = 0;
+                $status = 1;
             } else {
-                $status = 0;
+                $status = 1;
             }
             $data = array(
                 'nama' => $this->input->post('nama'),
@@ -192,46 +192,50 @@ class Pengguna extends CI_Controller {
                 $id = $this->db->insert_id();
                 $hash_id = md5(sha1($id));
 
-                $email = $this->input->post('email');
-                //memasukan ke array
-                $this->load->library('email');
-                $config = array();
-                $config['charset'] = 'utf-8';
-                $config['useragent'] = 'Codeigniter';
-                $config['protocol'] = "smtp";
-                $config['mailtype'] = "html";
-                $config['smtp_host'] = "ssl://smtp.gmail.com"; //pengaturan smtp
-                $config['smtp_port'] = "465";
-                $config['smtp_timeout'] = "400";
-                $config['smtp_user'] = "pengelolaindonesiabelajar@gmail.com"; // isi dengan email kamu
-                $config['smtp_pass'] = "sandipengelola"; // isi dengan password kamu
-                $config['crlf'] = "\r\n";
-                $config['newline'] = "\r\n";
-                $config['wordwrap'] = TRUE;
-
-                //memanggil library email dan set konfigurasi untuk pengiriman email
-                $this->email->initialize($config);
-                //konfigurasi pengiriman
-                $this->email->from($config['smtp_user']);
-                $this->email->to($email);
-                $this->email->subject("Verifikasi Akun Indonesia Belajar");
-                $this->email->message(
-                        "Terimakasih telah melakuan registrasi di Indonesia Belajar, untuk memverifikasi silahkan klik tautan dibawah ini<br><br>
-			<a href='" . site_url("pengguna/verification/$hash_id") . "'>Tautan Verifikasi</a>"
-                );
-
-                if ($this->email->send()) {
-
-                    echo "<script>alert('Berhasil melakukan registrasi, silahkan cek email kamu');
+//                $email = $this->input->post('email');
+//                //memasukan ke array
+//                $this->load->library('email');
+//                $config = array();
+//                $config['charset'] = 'utf-8';
+//                $config['useragent'] = 'Codeigniter';
+//                $config['protocol'] = "smtp";
+//                $config['mailtype'] = "html";
+//                $config['smtp_host'] = "ssl://smtp.gmail.com"; //pengaturan smtp
+//                $config['smtp_port'] = "465";
+//                $config['smtp_timeout'] = "400";
+//                $config['smtp_user'] = "pengelolaindonesiabelajar@gmail.com"; // isi dengan email kamu
+//                $config['smtp_pass'] = "sandipengelola"; // isi dengan password kamu
+//                $config['crlf'] = "\r\n";
+//                $config['newline'] = "\r\n";
+//                $config['wordwrap'] = TRUE;
+//
+//                //memanggil library email dan set konfigurasi untuk pengiriman email
+//                $this->email->initialize($config);
+//                //konfigurasi pengiriman
+//                $this->email->from($config['smtp_user']);
+//                $this->email->to($email);
+//                $this->email->subject("Verifikasi Akun Indonesia Belajar");
+//                $this->email->message(
+//                        "Terimakasih telah melakuan registrasi di Indonesia Belajar, untuk memverifikasi silahkan klik tautan dibawah ini<br><br>
+//			<a href='" . site_url("pengguna/verification/$hash_id") . "'>Tautan Verifikasi</a>"
+//                );
+//
+//                if ($this->email->send()) {
+//
+//                    echo "<script>alert('Berhasil melakukan registrasi, silahkan cek email kamu');
+//                        location.href = '" . base_url("") . "';
+//                        </script>";
+//                } else {
+//                    echo "<script>alert('Gagal mengirim verifikasi email, Silahkan register ulang');
+//                        location.href = '" . base_url("") . "';
+//                        </script>";
+//                }
+                
+                echo "<script>alert('Berhasil melakukan registrasi, silahkan login');
                         location.href = '" . base_url("") . "';
                         </script>";
-                } else {
-                    echo "<script>alert('Gagal mengirim verifikasi email, Silahkan register ulang');
-                        location.href = '" . base_url("") . "';
-                        </script>";
-                }
             } else {
-                echo "<script>alert('Gagal Tambah Data Pengguna');
+                echo "<script>alert('Gagal melakukan registrasi');
                 location.href = '" . base_url("") . "';
                </script>";
             }
