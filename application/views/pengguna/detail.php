@@ -33,7 +33,7 @@
     </div>
     <div class="row">
         <div class="col-lg-3 ">
-           
+
             <div class="form-group">
                 <?php
                 $filename = "images/pengguna/" . $hash_id . ".jpg";
@@ -48,11 +48,13 @@
                 }
                 ?>
             </div>
-            <input type="file" id="foto" name="foto">
+            <?php if ($this->session->userdata('id_pengguna') === isset($row->id_pengguna) ? $row->id_pengguna : '') { ?>
+                <input type="file" id="foto" name="foto">
+            <?php } ?>
         </div>
 
         <div class="col-lg-6 ">
-            
+
             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <tr><td>Email</td><td><?= isset($row->email) ? $row->email : '' ?></td></tr>
                 <tr><td>Username</td><td><?= isset($row->username) ? $row->username : '' ?></td></tr>
@@ -66,7 +68,9 @@
                 <tr><td>Nomor identitas</td><td><?= isset($row->no_identitas) ? $row->no_identitas : '' ?></td></tr>
 
             </table>
-            <a class="btn btn-success" href="<?= base_url() ?>index.php/pengguna/edit/<?= $hash_id ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <?php if ($this->session->userdata('id_pengguna') === isset($row->id_pengguna) ? $row->id_pengguna : '') { ?>
+                <a class="btn btn-success" href="<?= base_url() ?>index.php/pengguna/edit/<?= $hash_id ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <?php } ?>
         </div>
     </div>
 </div>

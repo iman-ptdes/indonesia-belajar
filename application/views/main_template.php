@@ -101,7 +101,10 @@
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/anak/cari">Cari Anak</a>
                             </li>
                             <li>
-                                <a class="page-scroll" href="<?= base_url('index.php') ?>/donasi/lihat">Donasi</a>
+                                <a class="page-scroll" href="<?= base_url('index.php') ?>/donasi/lihat">Data Donasi</a>
+                            </li>
+                            <li>
+                                <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/lihat">Data Pengentri</a>
                             </li>
                             <li>
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/detail/<?= md5(sha1($this->session->userdata('id_pengguna')))?>">Profil</a>
@@ -125,7 +128,7 @@
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/donasi/lihat">Data Donasi</a>
                             </li>
                             <li>
-                                <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/lihat">Data Pengguna</a>
+                                <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/lihat">Data Pengentri</a>
                             </li>
                             <li>
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/detail/<?= md5(sha1($this->session->userdata('id_pengguna')))?>">Profil</a>

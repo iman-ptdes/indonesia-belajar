@@ -35,7 +35,11 @@
 
                         <label>Username</label>
                         <input class="form-control" name="username" id="nama" value="<?= isset($username) ? $username : ''; ?>">
-
+                        
+                        <?php if ($this->input->post('group_pengguna') == 1) { ?>
+                $group_pengguna = $this->input->post('group_pengguna');
+            <?php } ?>
+                        
                         <label>Status</label>
                         <?= form_dropdown('status_pengguna', $status_pengguna, isset($isi_status_pengguna) ? $isi_status_pengguna : '', "class='form-control'") ?>
                     </div>

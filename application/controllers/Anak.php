@@ -63,7 +63,7 @@ class Anak extends CI_Controller {
     }
 
     public function tambah() {
-        if ($this->session->userdata('id_pengguna_group') == 2) {
+        if ($this->session->userdata('id_pengguna_group') != 2) {
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
         }
@@ -78,7 +78,7 @@ class Anak extends CI_Controller {
     }
 
     public function tambah_db() {
-        if ($this->session->userdata('id_pengguna_group') == 2) {
+        if ($this->session->userdata('id_pengguna_group') != 2) {
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
         }
@@ -172,7 +172,7 @@ class Anak extends CI_Controller {
     }
 
     public function edit($hash_id) {
-        if ($this->session->userdata('id_pengguna_group') == 2) {
+        if (($this->session->userdata('id_pengguna_group') != 1) OR ($this->session->userdata('id_pengguna_group') != 2) ){
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
         }
@@ -190,7 +190,7 @@ class Anak extends CI_Controller {
     }
 
     public function edit_db() {
-        if ($this->session->userdata('id_pengguna_group') == 2) {
+        if (($this->session->userdata('id_pengguna_group') != 1) OR ($this->session->userdata('id_pengguna_group') != 2) ){
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
         }
@@ -247,7 +247,10 @@ class Anak extends CI_Controller {
     }
 
     public function hapus($hash_id) {
-
+        if (($this->session->userdata('id_pengguna_group') != 1) OR ($this->session->userdata('id_pengguna_group') != 2) ){
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
         if ($this->db_model->delete('anak', array("md5(sha1(id_anak)) " => $hash_id))) {
             $targetFolder = 'images/anak'; // Relative to the root
             if (file_exists($targetFolder . '/' . $hash_id . '.jpg')) {
@@ -258,7 +261,7 @@ class Anak extends CI_Controller {
     }
 
     public function upload($hash_id = '') {
-        if ($this->session->userdata('id_pengguna_group') == 2) {
+        if ($this->session->userdata('id_pengguna_group') != 2) {
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
         }
