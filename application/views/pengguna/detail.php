@@ -51,7 +51,8 @@
             <?php 
             $id_pengguna = isset($row->id_pengguna) ? $row->id_pengguna : '';
             if ($this->session->userdata('id_pengguna') == $id_pengguna ){ ?>
-                 <input type="file" id="foto" name="foto">
+                 <input type="file" id="foto" name="foto"></br>
+                 <a class="btn btn-success" href="<?= base_url() ?>index.php/pengguna/rekening">Edit Data Rekening</a></br></br>
             <?php } ?>
             
         </div>
@@ -72,13 +73,16 @@
                 <tr><td>Kota</td><td><?= isset($row->kota) ? $row->kota : '' ?></td></tr>
                 <tr><td>Provinsi</td><td><?= isset($row->provinsi) ? $row->provinsi : '' ?></td></tr>
                 <tr><td>Jenis Identitas</td><td><?= isset($row->jenis_identitas) ? $row->jenis_identitas : '' ?></td></tr>
-                <tr><td>Nomor identitas</td><td><?= isset($row->no_identitas) ? $row->no_identitas : '' ?></td></tr>
+                <tr><td>Nomor Identitas</td><td><?= isset($row->no_identitas) ? $row->no_identitas : '' ?></td></tr>
+                <tr><td>Nama Bank</td><td><?= isset($row->nama_bank) ? $row->nama_bank : '' ?></td></tr>
+                <tr><td>Nomor Rekening</td><td><?= isset($row->no_rekening) ? $row->no_rekening : '' ?></td></tr>
 
             </table>
             <?php 
             $id_pengguna = isset($row->id_pengguna) ? $row->id_pengguna : '';
             if ($this->session->userdata('id_pengguna') == $id_pengguna ){ ?>
                 <a class="btn btn-success" href="<?= base_url() ?>index.php/pengguna/edit/<?= $hash_id ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                
             <?php } ?>
         </div>
     </div>

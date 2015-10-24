@@ -11,7 +11,6 @@ class Pengguna extends CI_Controller {
         $this->load->model(array('db_model', 'pengguna_model'));
         $this->load->library(array('pagination', 'form_validation', 'form_option', 'convertion'));
         $this->load->helper('url', 'form', 'date');
-        
     }
 
     public function lihat() {
@@ -19,7 +18,7 @@ class Pengguna extends CI_Controller {
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
         }
-        
+
         $nama = '';
         $username = '';
         $status_pengguna = '';
@@ -35,16 +34,16 @@ class Pengguna extends CI_Controller {
         if ($this->input->post('status_pengguna') != '') {
             $status_pengguna = $this->input->post('status_pengguna');
         }
-        
-        if (($this->session->userdata('id_pengguna_group') == 3) OR ($this->session->userdata('id_pengguna_group') == 4)){
+
+        if (($this->session->userdata('id_pengguna_group') == 3) OR ( $this->session->userdata('id_pengguna_group') == 4)) {
             $group_pengguna = 2;
         } else {
             if ($this->input->post('group_pengguna') == 1) {
                 $group_pengguna = $this->input->post('group_pengguna');
             }
         }
-        
-        
+
+
         if ($this->input->post('jenis_pengguna') != '') {
             $jenis_pengguna = $this->input->post('jenis_pengguna');
         }
@@ -74,7 +73,7 @@ class Pengguna extends CI_Controller {
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
         }
-        
+
         $query = $this->db_model->get('pengguna', '*', array("md5(sha1(id_pengguna))" => $hash_id));
         $data['row'] = $query->row();
         $data['hash_id'] = $hash_id;
@@ -89,10 +88,10 @@ class Pengguna extends CI_Controller {
         } else if ($this->session->userdata('id_pengguna_group') == 2) {
             echo "<script>location.href = '" . site_url("anak/cari") . "';
 		</script>";
-        }else if ($this->session->userdata('id_pengguna_group') == 3) {
+        } else if ($this->session->userdata('id_pengguna_group') == 3) {
             echo "<script>location.href = '" . site_url("donatur/lihat") . "';
 		</script>";
-        }else if ($this->session->userdata('id_pengguna_group') == 4) {
+        } else if ($this->session->userdata('id_pengguna_group') == 4) {
             echo "<script>location.href = '" . site_url("anak/cari") . "';
 		</script>";
         }
@@ -280,7 +279,7 @@ class Pengguna extends CI_Controller {
 //                        location.href = '" . base_url("") . "';
 //                        </script>";
 //                }
-                
+
                 echo "<script>alert('Berhasil melakukan registrasi, silahkan login');
                         location.href = '" . base_url("") . "';
                         </script>";
@@ -306,7 +305,7 @@ class Pengguna extends CI_Controller {
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
         }
-        
+
         $query = $this->db_model->get('pengguna', '*', array("md5(sha1(id_pengguna))" => $hash_id));
         $data['row'] = $query->row();
         $data['hash_id'] = $hash_id;
@@ -322,7 +321,7 @@ class Pengguna extends CI_Controller {
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
         }
-        
+
         $hash_id = $this->input->post('hash_id');
 //        $data_check = array(
 //            'username' => $this->input->post('username'),
@@ -417,7 +416,7 @@ class Pengguna extends CI_Controller {
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
         }
-        
+
         $targetFolder = 'images/pengguna'; // Relative to the root
 
         if (file_exists($targetFolder . '/' . $id . '.jpg')) {
@@ -532,8 +531,52 @@ class Pengguna extends CI_Controller {
 		</script>";
         }
         $this->session->sess_destroy();
-        echo "<script>location.href = '" . base_url(). "';
+        echo "<script>location.href = '" . base_url() . "';
 			</script>";
+    }
+
+    public function tambah_rekening2() {
+        if ($this->session->userdata('id_pengguna_group') != 2) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
+        $data['content'] = $this->load->view('pengguna/tambah_rekening', $data, true);
+        $this->load->view('main_template', $data);
+    }
+
+    public function rekening() {
+        if ($this->session->userdata('id_pengguna_group') != 2) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
+
+        $query = $this->db_model->get('pengguna', 'nama_bank,no_rekening', array("id_pengguna" => $this->session->userdata('id_pengguna')));
+        $data['row'] = $query->row();
+        $data['content'] = $this->load->view('pengguna/rekening', $data, true);
+        $this->load->view('main_template', $data);
+    }
+
+    public function rekening_db() {
+        if ($this->session->userdata('id_pengguna_group') != 2) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
+        $data = array(
+            'nama_bank' => $this->input->post('nama_bank'),
+            'no_rekening' => $this->input->post('no_rekening')
+        );
+
+
+        if ($this->db_model->update('pengguna', $data, array("id_pengguna" => $this->session->userdata('id_pengguna')))) {
+            $hash_id = md5(sha1($this->session->userdata('id_pengguna')));
+            echo "<script>alert('Berhasil Edit Data Rekening');
+                    location.href = '" . site_url("pengguna/detail/") . "/$hash_id';
+                    </script>";
+        } else {
+            echo "<script>alert('Gagal Edit Data Rekening');
+                    history.go(-1);
+                    </script>";
+        }
     }
 
 }
