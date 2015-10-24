@@ -130,6 +130,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-lg-5 control-label">Nomor Induk Kependudukan (Kartu Keluarga)</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" name="nik" />
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-lg-5 control-label">Jenis kelamin*</label>
                     <div class="col-lg-6">
                         <?= form_dropdown('jenis_kelamin', $jenis_kelamin, '', "class='form-control'") ?>
