@@ -52,6 +52,7 @@
             if (v !== vc)        
                $(this).val(vc);
         });
+        $("#jumlah").trigger('input');
     });
 </script>
 
@@ -60,42 +61,37 @@
         <h2>Donasi</h2>
     </div>
     <p id="age"></p>
- <?= form_open_multipart('donasi/tambah_db', array('id' => 'form', 'class' => 'form-horizontal')) ?>
+ <?= form_open_multipart('donasi/edit_db/', array('id' => 'form', 'class' => 'form-horizontal')) ?>
 		<div class="form-group">
 			<label class="col-lg-5 control-label">Donasi untuk</label>
 			<div class="col-lg-6">
 				<strong><?php echo isset($nama_anak)?$nama_anak:''?></strong>
-                                <input type="hidden" name="id_anak" value="<?php echo isset($id_anak)?$id_anak:''?>">
+                                <input type="hidden" name="hash_id" value="<?php echo isset($hash_id)?$hash_id:''?>">
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-lg-5 control-label">Tanggal Donasi</label>
 			<div class="col-lg-6">
-				<input type="text" class="form-control" name="tanggal_donasi" id="tanggal_donasi" placeholder="Tanggal Donasi"/>
+				<input type="text" class="form-control" name="tanggal_donasi" id="tanggal_donasi" placeholder="Tanggal Donasi" value="<?php echo isset($row->tgl_donasi)?date('d-m-Y',strtotime($row->tgl_donasi)):''; ?>"/>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-lg-5 control-label">Jumlah*</label>
 			<div class="col-lg-6">
-				<input type="text" class="form-control" id="jumlah" name="jumlah" placeholder="Jumlah" />
+				<input type="text" class="form-control" id="jumlah" name="jumlah" placeholder="Jumlah"  value="<?php echo isset($row->jumlah)?$row->jumlah:''; ?>"/>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-lg-5 control-label">Pesan</label>
 			<div class="col-lg-6">
-				<textarea class="form-control" name="pesan" placeholder="Pesan"></textarea>
-			</div>
-		</div>
-		 <div class="form-group">
-			<label class="col-lg-5 control-label">Upload Bukti Transfer</label>
-			<div class="col-lg-6">
-				<input type='file' name='donasi_file'  />
+				<textarea class="form-control" name="pesan" placeholder="Pesan"><?php echo isset($row->pesan)?$row->pesan:''; ?></textarea>
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<div class="col-lg-5" style='text-align:right'>* Harus diisi</div>
 			<div class="col-lg-6">
+                            <a class="btn btn-success" href="<?= base_url() ?>index.php/donasi/">Kembali</a>
 			   <button type="submit" class="btn btn-primary">Simpan</button>
 			</div>
 		</div>
