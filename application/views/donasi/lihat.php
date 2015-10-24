@@ -32,6 +32,9 @@
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
+        $('#data_anak').DataTable({
+            responsive: true
+        });
 	$('.thumbnail').hover(
 		function () {
 			$(this).find('.caption').slideDown(250);
@@ -104,47 +107,52 @@ $(document).ready(function() {
             <br />
 
             <div class="panel-body">
-				<div class="row" style="padding-left:20px;padding-right:20px">	
+                <div class="dataTable_wrapper">
+                    <table class="table table-hover" id="data_anak">
+                        <thead>
+                            <tr>
+                                <th data-field="Anak">Data Anak</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 					<?php
 					if ($jumlah > 0) {
 						$no = 1;
 						foreach ($data as $row) {
-							?>				
-					<div class="col-lg-3 thumbnail">
-						<div class="caption">
-                             <h4 align="center"><?php echo isset($row->nama) ? $row->nama : ''; ?></h4>
-
-                            <p align="center" style="font-size:11pt;"><?php echo isset($row->tanggal_lahir) ? (date('Y')-substr($row->tanggal_lahir,0,4)).' th' : ''; ?><br/>
-							<?php echo isset($row->kota) ? $row->kota.', ' : ''; ?><?php echo isset($row->provinsi) ? $row->provinsi : ''; ?><br/>
-							<?php echo isset($row->tingkat_sekolah) ? $row->tingkat_sekolah : ''; ?><br/>
-							</p>
-							<p align="center"><a href="<?= base_url() ?>index.php/anak/detail/<?= md5(sha1($row->id_anak)) ?>" class="btn btn-primary">Detail</a></p>
-
-                            </p>
-                        </div>
-                        <div class="caption-btm"><strong><?php echo isset($row->nama) ? strtoupper($row->nama) : ''; ?></strong>, 
-						<?php echo isset($row->tanggal_lahir) ? (date('Y')-substr($row->tanggal_lahir,0,4)).' th' : ''; ?></div>
-						<?php
-						$hash_id = md5(sha1($row->id_anak));
-						$filename = "images/anak/" . $hash_id . ".jpg";
-						if (file_exists($filename)) {
 							?>
-							<img id="img"  class="img-rounded" src="<?= base_url(); ?><?= $filename; ?>" alt="Foto" style="height:200px;" class="img-thumbnail">                
-							<?php
-						} else {
-							?>
-							<img id="img"  class="img-rounded" src="<?= base_url(); ?>images/pengguna/noimage.jpg" alt="Foto" style="height:200px;" class="img-thumbnail">                                        
-							<?php
-						}
-						?>
-						</table>
-					</div>
+                        <tr><td>
+                            <div class="col-lg-3 thumbnail">
+                                <?php
+                                $hash_id = md5(sha1($row->id_anak));
+                                $filename = "images/anak/" . $hash_id . ".jpg";
+                                if (file_exists($filename)) {
+                                        ?>
+                                        <img id="img"  class="img-rounded" src="<?= base_url(); ?><?= $filename; ?>" alt="Foto" style="height:200px;" class="img-thumbnail">                
+                                        <?php
+                                } else {
+                                        ?>
+                                        <img id="img"  class="img-rounded" src="<?= base_url(); ?>images/pengguna/noimage.jpg" alt="Foto" style="height:200px;" class="img-thumbnail">                                        
+                                        <?php
+                                }
+                                ?>
+                            </div>
+                            <div class="col-lg-6">
+                                <h4><?php echo isset($row->nama) ? $row->nama : ''; ?></h4>
+                                <?php echo isset($row->jenis_kelamin) ? $row->jenis_kelamin.', ' : ''; ?><?php $umur = isset($row->tanggal_lahir) ? (date("Y") - (substr($row->tanggal_lahir, 0, 4))): ''; echo $umur.' th'?><br/>
+                                <p style="font-size:12pt;"><?php echo isset($row->alamat) ? $row->alamat : ''; ?><br/>
+                                <?php echo isset($row->kota) ? $row->kota.', ' : ''; ?><?php echo isset($row->provinsi) ? $row->provinsi : ''; ?><br/>
+                                Alasan Tidak Bersekolah : <?php echo isset($row->alasan) ? $row->alasan : ''; ?></p>
+                                <p><a href="<?= base_url() ?>index.php/anak/detail/<?= md5(sha1($row->id_anak)) ?>" class="btn btn-primary">Detail</a></p>
+                            </div>    
+                            </td></tr>
 							<?php $no++; ?>    
 							<?php
 						}
 					}
 					?>
-				</div>
+                        </tbody>
+                        </table>
+                    </div>
                 <!-- /.table-responsive -->
 
             </div>
