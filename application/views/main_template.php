@@ -139,54 +139,22 @@
                 <!-- /.navbar-collapse -->
             </div>
 
-
-            <!--        <div class="container">
-                        <div class="row" >
-                            <div class="col-md-6">
-                                <a href=""><img src="<?php echo base_url('images/logo.png'); ?>"></a>
-                            </div>
-                            <div class="col-md-6" style="padding-top:20px;">
-                                <div class="col-md-5">
-            <?= form_open('login', array('id' => 'formLogin', 'class' => 'form-horizontal')) ?>
-                                        <div class="form-group">
-                                            <input placeholder="Username" type="text" class="form-control" name="username" />
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <input placeholder="Password" type="password" class="form-control" name="password" />
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-warning"><b>Login</b></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                         /.navbar-collapse 
-                    </div>-->
-            <!-- /.container-fluid -->
-        </nav>
-
-        <!-- Header -->
-        <div class="container konten">
-            <div class="row" style="padding-top:50px;">
+    <!-- Header -->
+        <div class="container">
+            <div class="row" style="padding-top:25px; padding-bottom: 25px;">
                 <section>
                     <?php echo $content; ?>
                 </section>
             </div>
         </div>
 
-        <!-- Footer -->
-        <footer class="text-center">
-            <div class="footer-below">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            Copyright &copy; Desnet2015
-                        </div>
+    <!-- Footer -->
+    <footer class="text-center l-footer l-subfooter.at_bottom">
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; TimDesember2015
                     </div>
                 </div>
             </div>
