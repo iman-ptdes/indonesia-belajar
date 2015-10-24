@@ -145,7 +145,7 @@
 
     <!-- Header -->
         <div class="container">
-            <div class="row" style="padding-top:25px; padding-bottom: 25px;">
+            <div class="row" style="padding-top:25px; padding-bottom: 30px;">
                 <section>
                     <?php echo $content; ?>
                 </section>
@@ -158,7 +158,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy; TimDesember2015
+                        <b>Tim Desember untuk Hackathon Merdeka 2.0</b>
                     </div>
                 </div>
             </div>
