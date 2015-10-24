@@ -98,7 +98,7 @@
     </nav>
 
     <!-- Header -->
-        <div class="container konten">
+        <div class="container">
             <div class="row" style="padding-top:25px; padding-bottom: 25px;">
                 <section>
                     <?php echo $content; ?>
