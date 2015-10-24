@@ -33,7 +33,7 @@
     </div>
     <div class="row">
         <div class="col-lg-3 ">
-           
+
             <div class="form-group">
                 <?php
                 $filename = "images/pengguna/" . $hash_id . ".jpg";
@@ -48,15 +48,24 @@
                 }
                 ?>
             </div>
-            <input type="file" id="foto" name="foto">
+            <?php 
+            $id_pengguna = isset($row->id_pengguna) ? $row->id_pengguna : '';
+            if ($this->session->userdata('id_pengguna') == $id_pengguna ){ ?>
+                 <input type="file" id="foto" name="foto">
+            <?php } ?>
+            
         </div>
 
         <div class="col-lg-6 ">
-            
+
             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <tr><td>Email</td><td><?= isset($row->email) ? $row->email : '' ?></td></tr>
-                <tr><td>Username</td><td><?= isset($row->username) ? $row->username : '' ?></td></tr>
-                <tr><td>Group Pengguna</td><td><?= $this->convertion->pengguna_group(isset($row->id_pengguna_group) ? $row->id_pengguna_group : ''); ?></td></tr>
+                <?php 
+                $id_pengguna = isset($row->id_pengguna) ? $row->id_pengguna : '';
+                if (($this->input->post('group_pengguna') == 1) OR ($this->session->userdata('id_pengguna') == $id_pengguna )) { ?>
+                    <tr><td>Username</td><td><?= isset($row->username) ? $row->username : '' ?></td></tr>
+                    <tr><td>Group Pengguna</td><td><?= $this->convertion->pengguna_group(isset($row->id_pengguna_group) ? $row->id_pengguna_group : ''); ?></td></tr>
+                <?php } ?>
                 <tr><td>Jenis Pengguna</td><td><?= isset($row->jenis_pengguna) ? $row->jenis_pengguna : '' ?></td></tr>
                 <tr><td>Nomor telepon</td><td><?= isset($row->telepon) ? $row->telepon : '' ?></td></tr>
                 <tr><td>Alamat</td><td><?= isset($row->alamat) ? $row->alamat : '' ?></td></tr>
@@ -66,7 +75,11 @@
                 <tr><td>Nomor identitas</td><td><?= isset($row->no_identitas) ? $row->no_identitas : '' ?></td></tr>
 
             </table>
-            <a class="btn btn-success" href="<?= base_url() ?>index.php/pengguna/edit/<?= $hash_id ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <?php 
+            $id_pengguna = isset($row->id_pengguna) ? $row->id_pengguna : '';
+            if ($this->session->userdata('id_pengguna') == $id_pengguna ){ ?>
+                <a class="btn btn-success" href="<?= base_url() ?>index.php/pengguna/edit/<?= $hash_id ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <?php } ?>
         </div>
     </div>
 </div>

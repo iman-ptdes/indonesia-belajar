@@ -110,7 +110,7 @@
     });
 </script>
 
-<div class="col-lg-8 col-lg-offset-2">
+<div class="col-lg-10 col-lg-offset-1">
     <div class="page-header">
         <h2>Pendataan Anak</h2>
     </div>

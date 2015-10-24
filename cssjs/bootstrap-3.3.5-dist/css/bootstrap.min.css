@@ -2716,7 +2716,7 @@ input[type=search] {
     }
 }
 .form-group {
-    margin-bottom: 15px
+    margin-bottom: 10px
 }
 .checkbox,
 .radio {
@@ -4290,7 +4290,8 @@ textarea.input-group-sm>.input-group-btn>.btn {
     }
 }
 .tab-content>.tab-pane {
-    display: none
+    display: none;
+    padding-top :10px;
 }
 .tab-content>.active {
     display: block

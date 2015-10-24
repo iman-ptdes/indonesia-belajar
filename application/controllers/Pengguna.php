@@ -15,7 +15,7 @@ class Pengguna extends CI_Controller {
     }
 
     public function lihat() {
-        if ($this->session->userdata('id_pengguna_group') != 1) {
+        if ($this->session->userdata('id_pengguna_group') == 2) {
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
         }
@@ -35,9 +35,16 @@ class Pengguna extends CI_Controller {
         if ($this->input->post('status_pengguna') != '') {
             $status_pengguna = $this->input->post('status_pengguna');
         }
-        if ($this->input->post('group_pengguna') != '') {
-            $group_pengguna = $this->input->post('group_pengguna');
+        
+        if (($this->session->userdata('id_pengguna_group') == 3) OR ($this->session->userdata('id_pengguna_group') == 4)){
+            $group_pengguna = 2;
+        } else {
+            if ($this->input->post('group_pengguna') == 1) {
+                $group_pengguna = $this->input->post('group_pengguna');
+            }
         }
+        
+        
         if ($this->input->post('jenis_pengguna') != '') {
             $jenis_pengguna = $this->input->post('jenis_pengguna');
         }

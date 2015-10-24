@@ -62,7 +62,7 @@
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/lihat">Data Pengguna</a>
                             </li>
                             <li>
-                                <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/detail/<?= md5(sha1($this->session->userdata('id_pengguna')))?>">Profil</a>
+                                <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/detail/<?= md5(sha1($this->session->userdata('id_pengguna')))?>"><?= $this->session->userdata('nama')?></a>
                             </li>
                             <li>
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/logout">Logout</a>
@@ -83,7 +83,7 @@
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/anak/cari">Cari Anak</a>
                             </li>
                             <li>
-                                <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/detail/<?= md5(sha1($this->session->userdata('id_pengguna')))?>">Profil</a>
+                                <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/detail/<?= md5(sha1($this->session->userdata('id_pengguna')))?>"><?= $this->session->userdata('nama')?></a>
                             </li>
                             <li>
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/logout">Logout</a>
@@ -101,10 +101,13 @@
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/anak/cari">Cari Anak</a>
                             </li>
                             <li>
-                                <a class="page-scroll" href="<?= base_url('index.php') ?>/donasi/lihat">Donasi</a>
+                                <a class="page-scroll" href="<?= base_url('index.php') ?>/donasi/lihat">Data Donasi</a>
                             </li>
                             <li>
-                                <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/detail/<?= md5(sha1($this->session->userdata('id_pengguna')))?>">Profil</a>
+                                <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/lihat">Data Pengentri</a>
+                            </li>
+                            <li>
+                                <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/detail/<?= md5(sha1($this->session->userdata('id_pengguna')))?>"><?= $this->session->userdata('nama')?></a>
                             </li>
                             <li>
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/logout">Logout</a>
@@ -125,10 +128,10 @@
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/donasi/lihat">Data Donasi</a>
                             </li>
                             <li>
-                                <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/lihat">Data Pengguna</a>
+                                <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/lihat">Data Pengentri</a>
                             </li>
                             <li>
-                                <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/detail/<?= md5(sha1($this->session->userdata('id_pengguna')))?>">Profil</a>
+                                <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/detail/<?= md5(sha1($this->session->userdata('id_pengguna')))?>"><?= $this->session->userdata('nama')?></a>
                             </li>
                             <li>
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/logout">Logout</a>
@@ -142,7 +145,7 @@
 
     <!-- Header -->
         <div class="container">
-            <div class="row" style="padding-top:25px; padding-bottom: 25px;">
+            <div class="row" style="padding-top:25px; padding-bottom: 30px;">
                 <section>
                     <?php echo $content; ?>
                 </section>
@@ -155,14 +158,14 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy; TimDesember2015
+                        <b>Tim Desember untuk Hackathon Merdeka 2.0</b>
                     </div>
                 </div>
             </div>
         </footer>
 
         <script type="text/javascript" src="<?= base_url('cssjs') ?>/startbootstrap-freelancer-1.0.3/js/classie.js"></script>
-        <script type="text/javascript" src="<?= base_url('cssjs') ?>/startbootstrap-freelancer-1.0.3/js/cbpAnimatedHeader.js"></script>
+<!--        <script type="text/javascript" src="<?= base_url('cssjs') ?>/startbootstrap-freelancer-1.0.3/js/cbpAnimatedHeader.js"></script>-->
         <script type="text/javascript" src="<?= base_url('cssjs') ?>/startbootstrap-freelancer-1.0.3/js/freelancer.js"></script>
 
 
