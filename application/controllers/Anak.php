@@ -98,7 +98,7 @@ class Anak extends CI_Controller {
         $nik = $this->input->post('nik');
         $data_check_nik = "nik = '$nik'";
         $query1 = $this->db_model->get('anak', 'nik', $data_check_nik);
-        if ($query1->num_rows() > 0) {
+        if ($query1->num_rows() > 0 AND $nik <> null) {
             echo "<script>alert('NIK sudah ada');
                 location.href = '" . site_url("anak/tambah") . "';
                 </script>";
@@ -585,6 +585,17 @@ class Anak extends CI_Controller {
                 </tr>";
         }
         echo "<table>";
+    }
+    
+    public function tambah_rekening() {
+        if ($this->session->userdata('id_pengguna_group') != 2) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
+
+        $
+        $data['content'] = $this->load->view('tambah_rekening/tambah', $data, true);
+        $this->load->view('main_template', $data);
     }
 
 }
