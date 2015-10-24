@@ -67,7 +67,7 @@ class Anak extends CI_Controller {
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
         }
-        
+
         $data['jenis_kelamin'] = $this->form_option->jenis_kelamin('');
         $data['status_tempat_tinggal'] = $this->form_option->status_tempat_tinggal('');
         $data['jenis_sekolah'] = $this->form_option->jenis_sekolah('');
@@ -82,7 +82,7 @@ class Anak extends CI_Controller {
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
         }
-        
+
         // if ($this->input->post('submit'))   
         if ($this->input->post('tanggal_lahir') == '') {
             if ($this->input->post('umur') == '') {
@@ -172,29 +172,25 @@ class Anak extends CI_Controller {
     }
 
     public function edit($hash_id) {
-        if (($this->session->userdata('id_pengguna_group') != 1) OR ($this->session->userdata('id_pengguna_group') != 2) ){
+        if (($this->session->userdata('id_pengguna_group') == 1) OR ( $this->session->userdata('id_pengguna_group') == 2)) {
+            $query = $this->db_model->get('anak', '*', array("md5(sha1(id_anak))" => $hash_id));
+            $data['row'] = $query->row();
+            $data['hash_id'] = $hash_id;
+            $data['jenis_kelamin'] = $this->form_option->jenis_kelamin('');
+            $data['status_tempat_tinggal'] = $this->form_option->status_tempat_tinggal('');
+            $data['jenis_sekolah'] = $this->form_option->jenis_sekolah('');
+            $data['tingkat_sekolah'] = $this->form_option->tingkat_sekolah('');
+            $data['status_bersekolah'] = $this->form_option->status_bersekolah('');
+            $data['content'] = $this->load->view('anak/edit', $data, true);
+            $this->load->view('main_template', $data);
+        } else {
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
         }
-        
-        $query = $this->db_model->get('anak', '*', array("md5(sha1(id_anak))" => $hash_id));
-        $data['row'] = $query->row();
-        $data['hash_id'] = $hash_id;
-        $data['jenis_kelamin'] = $this->form_option->jenis_kelamin('');
-        $data['status_tempat_tinggal'] = $this->form_option->status_tempat_tinggal('');
-        $data['jenis_sekolah'] = $this->form_option->jenis_sekolah('');
-        $data['tingkat_sekolah'] = $this->form_option->tingkat_sekolah('');
-        $data['status_bersekolah'] = $this->form_option->status_bersekolah('');
-        $data['content'] = $this->load->view('anak/edit', $data, true);
-        $this->load->view('main_template', $data);
     }
 
     public function edit_db() {
-        if (($this->session->userdata('id_pengguna_group') != 1) OR ($this->session->userdata('id_pengguna_group') != 2) ){
-            echo "<script>location.href = '" . base_url() . "';
-		</script>";
-        }
-//		} if ($this->input->post('tanggal_lahir') == '' ){
+
         if ($this->input->post('tanggal_lahir') == '') {
             if ($this->input->post('umur') == '') {
                 $tanggal_lahir = '1970-01-01';
@@ -247,47 +243,51 @@ class Anak extends CI_Controller {
     }
 
     public function hapus($hash_id) {
-        if (($this->session->userdata('id_pengguna_group') != 1) OR ($this->session->userdata('id_pengguna_group') != 2) ){
+        if (($this->session->userdata('id_pengguna_group') != 1) OR ( $this->session->userdata('id_pengguna_group') != 2)) {
+
+            if ($this->db_model->delete('anak', array("md5(sha1(id_anak)) " => $hash_id))) {
+                $targetFolder = 'images/anak'; // Relative to the root
+                if (file_exists($targetFolder . '/' . $hash_id . '.jpg')) {
+                    unlink($targetFolder . '/' . $hash_id . '.jpg');
+                }
+                redirect("anak/lihat");
+            }
+        } else {
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
-        }
-        if ($this->db_model->delete('anak', array("md5(sha1(id_anak)) " => $hash_id))) {
-            $targetFolder = 'images/anak'; // Relative to the root
-            if (file_exists($targetFolder . '/' . $hash_id . '.jpg')) {
-                unlink($targetFolder . '/' . $hash_id . '.jpg');
-            }
-            redirect("anak/lihat");
         }
     }
 
     public function upload($hash_id = '') {
-        if ($this->session->userdata('id_pengguna_group') != 2) {
+        if (($this->session->userdata('id_pengguna_group') != 1) OR ( $this->session->userdata('id_pengguna_group') != 2)) {
+
+            $targetFolder = 'images/anak'; // Relative to the root
+
+            if (file_exists($targetFolder . '/' . $hash_id . '.jpg')) {
+                unlink($targetFolder . '/' . $hash_id . '.jpg');
+            }
+            if (!empty($_FILES)) {
+                $tempFile = $_FILES['file']['tmp_name'];
+                $targetPath = base_url() . $targetFolder;
+                $targetFile = $hash_id . '.jpg';
+                $targetFile = rtrim($targetPath, '/') . '/' . $targetFile;
+
+                // Validate the file type
+                $fileTypes = array('jpg', 'jpeg'); // File extensions
+                $fileParts = pathinfo($_FILES['file']['name']);
+
+                if (in_array($fileParts['extension'], $fileTypes)) {
+                    $destination_path = getcwd() . DIRECTORY_SEPARATOR;
+                    $target_path = $destination_path . $targetFolder . '/' . basename($targetFile);
+                    move_uploaded_file($tempFile, $target_path);
+                    echo '1';
+                } else {
+                    echo 'Invalid file type.';
+                }
+            }
+        } else {
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
-        }
-        $targetFolder = 'images/anak'; // Relative to the root
-
-        if (file_exists($targetFolder . '/' . $hash_id . '.jpg')) {
-            unlink($targetFolder . '/' . $hash_id . '.jpg');
-        }
-        if (!empty($_FILES)) {
-            $tempFile = $_FILES['file']['tmp_name'];
-            $targetPath = base_url() . $targetFolder;
-            $targetFile = $hash_id . '.jpg';
-            $targetFile = rtrim($targetPath, '/') . '/' . $targetFile;
-
-            // Validate the file type
-            $fileTypes = array('jpg', 'jpeg'); // File extensions
-            $fileParts = pathinfo($_FILES['file']['name']);
-
-            if (in_array($fileParts['extension'], $fileTypes)) {
-                $destination_path = getcwd() . DIRECTORY_SEPARATOR;
-                $target_path = $destination_path . $targetFolder . '/' . basename($targetFile);
-                move_uploaded_file($tempFile, $target_path);
-                echo '1';
-            } else {
-                echo 'Invalid file type.';
-            }
         }
     }
 
@@ -396,7 +396,7 @@ class Anak extends CI_Controller {
         $jenis_sekolah = '';
         $tingkat_sekolah = '';
         $status_bersekolah = '';
-        
+
         $jumlah = 0;
         if ($this->input->post('nama') != '') {
             $nama = $this->input->post('nama');
@@ -428,15 +428,15 @@ class Anak extends CI_Controller {
         if ($this->input->post('tingkat_sekolah') != '') {
             $tingkat_sekolah = $this->input->post('tingkat_sekolah');
         }
-        
+
         if ($this->session->userdata('id_pengguna_group') != 2) {
             $id_pengguna = '';
         } else {
             $id_pengguna = $this->session->userdata('id_pengguna');
         }
-        
+
         if ($this->input->post('cari') == 'cari') {
-            $query = $this->anak_model->cari_anak2($nama, $jenis_kelamin, $umur_awal, $umur_akhir, $alamat, $kota, $provinsi, $status_bersekolah, $jenis_sekolah, $tingkat_sekolah,$id_pengguna);
+            $query = $this->anak_model->cari_anak2($nama, $jenis_kelamin, $umur_awal, $umur_akhir, $alamat, $kota, $provinsi, $status_bersekolah, $jenis_sekolah, $tingkat_sekolah, $id_pengguna);
 
             $data['data'] = $query->result();
             $jumlah = $query->num_rows();
@@ -503,8 +503,13 @@ class Anak extends CI_Controller {
         if ($this->input->post('tingkat_sekolah') != '') {
             $tingkat_sekolah = $this->input->post('tingkat_sekolah');
         }
+        if ($this->session->userdata('id_pengguna_group') != 2) {
+            $id_pengguna = '';
+        } else {
+            $id_pengguna = $this->session->userdata('id_pengguna');
+        }
         if ($this->input->post('cari') == 'cari') {
-            $query = $this->anak_model->cari_anak2($nama, $jenis_kelamin, $umur_awal, $umur_akhir, $alamat, $kota, $provinsi, $status_bersekolah, $jenis_sekolah, $tingkat_sekolah);
+            $query = $this->anak_model->cari_anak2($nama, $jenis_kelamin, $umur_awal, $umur_akhir, $alamat, $kota, $provinsi, $status_bersekolah, $jenis_sekolah, $tingkat_sekolah,$id_pengguna);
         }
 
         @header("Cache-Control: "); // leave blank to avoid IE errors
