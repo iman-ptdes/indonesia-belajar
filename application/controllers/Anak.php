@@ -88,71 +88,80 @@ class Anak extends CI_Controller {
         } else {
             $tanggal_lahir = date("Y-m-d", strtotime($this->input->post('tanggal_lahir')));
         }
-        date_default_timezone_set('Asia/Jakarta');
-        $data = array(
-            'nama' => $this->input->post('nama'),
-            'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-            'alamat' => $this->input->post('alamat'),
-            'kota' => $this->input->post('kota'),
-            'provinsi' => $this->input->post('provinsi'),
-            'telepon' => $this->input->post('telepon'),
-            'tempat_lahir' => $this->input->post('tempat_lahir'),
-            'tanggal_lahir' => $tanggal_lahir,
-            'status_tempat_tinggal' => $this->input->post('status_tempat_tinggal'),
-            'status_bersekolah' => $this->input->post('status_bersekolah'),
-            'jenis_sekolah' => $this->input->post('jenis_sekolah'),
-            'tingkat_sekolah' => $this->input->post('tingkat_sekolah'),
-            'sekolah' => $this->input->post('sekolah'),
-            'alamat_sekolah' => $this->input->post('alamat_sekolah'),
-            'alasan' => $this->input->post('alasan'),
-            'ayah' => $this->input->post('ayah'),
-            'pekerjaan_ayah' => $this->input->post('pekerjaan_ayah'),
-            'pendidikan_ayah' => $this->input->post('pendidikan_ayah'),
-            'ibu' => $this->input->post('ibu'),
-            'pekerjaan_ibu' => $this->input->post('pekerjaan_ibu'),
-            'pendidikan_ibu' => $this->input->post('pendidikan_ibu'),
-            'alamat_ortu' => $this->input->post('alamat_ortu'),
-            'pendapatan' => $this->input->post('pendapatan'),
-            'saudara_ke' => $this->input->post('saudara_ke'),
-            'jumlah_saudara' => $this->input->post('jumlah_saudara'),
-            //'id_pengguna' => $this->session->userdata('id_pengguna'),
-            'id_pengguna' => 3,
-            //'foto_profil' => $this->input->post('userfile'),
-            'tanggal_pendaftaran' => date('Y-m-d'),
-        );
 
-        if ($this->db_model->add('anak', $data)) {
-            $id = $this->db->insert_id();
-            $hash_id = md5(sha1($id));
-
-            $config = array(
-                'upload_path' => 'images/anak',
-                'allowed_types' => "jpg",
-                'max_size' => "4000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
-                'max_height' => "1028",
-                'max_width' => "1024",
-                'file_name' => $hash_id
-            );
-            $this->load->library('upload', $config);
-            if ($this->upload->do_upload('user_file')) {
-                //$data = array('upload_data' => $this->upload->data());
-                // print_r($this->upload->data());
-                                echo "<script>alert('Berhasil Tambah Data Anak');
-                location.href = '" . site_url("anak/detail/") . "/$hash_id';
-               </script>";
-                 
-            } else {
-                //$error = array('error' => $this->upload->display_errors());\
-                //print_r($error);
-                echo "<script>alert('Berhasil Tambah Data Anak Tetapi Gagal Upload Poto');
-                location.href = '" . site_url("anak/detail/") . "/$hash_id';
-               </script>";
-            }
-            
+        $nik = $this->input->post('nik');
+        $data_check_nik = "nik = '$nik'";
+        $query1 = $this->db_model->get('pengguna', 'id_anak', $data_check_nik);
+        if ($query1->num_rows() > 0) {
+            echo "<script>alert('NIK sudah ada');
+                location.href = '" . site_url("anak/tambah") . "';
+                </script>";
         } else {
-            echo "<script>alert('Gagal Tambah Data anak');
+            date_default_timezone_set('Asia/Jakarta');
+            $data = array(
+                'nama' => $this->input->post('nama'),
+                'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+                'alamat' => $this->input->post('alamat'),
+                'kota' => $this->input->post('kota'),
+                'provinsi' => $this->input->post('provinsi'),
+                'telepon' => $this->input->post('telepon'),
+                'tempat_lahir' => $this->input->post('tempat_lahir'),
+                'tanggal_lahir' => $tanggal_lahir,
+                'nik' => $this->input->post('nik'),
+                'status_tempat_tinggal' => $this->input->post('status_tempat_tinggal'),
+                'status_bersekolah' => $this->input->post('status_bersekolah'),
+                'jenis_sekolah' => $this->input->post('jenis_sekolah'),
+                'tingkat_sekolah' => $this->input->post('tingkat_sekolah'),
+                'sekolah' => $this->input->post('sekolah'),
+                'alamat_sekolah' => $this->input->post('alamat_sekolah'),
+                'alasan' => $this->input->post('alasan'),
+                'ayah' => $this->input->post('ayah'),
+                'pekerjaan_ayah' => $this->input->post('pekerjaan_ayah'),
+                'pendidikan_ayah' => $this->input->post('pendidikan_ayah'),
+                'ibu' => $this->input->post('ibu'),
+                'pekerjaan_ibu' => $this->input->post('pekerjaan_ibu'),
+                'pendidikan_ibu' => $this->input->post('pendidikan_ibu'),
+                'alamat_ortu' => $this->input->post('alamat_ortu'),
+                'pendapatan' => $this->input->post('pendapatan'),
+                'saudara_ke' => $this->input->post('saudara_ke'),
+                'jumlah_saudara' => $this->input->post('jumlah_saudara'),
+                //'id_pengguna' => $this->session->userdata('id_pengguna'),
+                'id_pengguna' => 3,
+                //'foto_profil' => $this->input->post('userfile'),
+                'tanggal_pendaftaran' => date('Y-m-d'),
+            );
+
+            if ($this->db_model->add('anak', $data)) {
+                $id = $this->db->insert_id();
+                $hash_id = md5(sha1($id));
+
+                $config = array(
+                    'upload_path' => 'images/anak',
+                    'allowed_types' => "jpg",
+                    'max_size' => "4000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
+                    'max_height' => "1028",
+                    'max_width' => "1024",
+                    'file_name' => $hash_id
+                );
+                $this->load->library('upload', $config);
+                if ($this->upload->do_upload('user_file')) {
+                    //$data = array('upload_data' => $this->upload->data());
+                    // print_r($this->upload->data());
+                    echo "<script>alert('Berhasil Tambah Data Anak');
+                location.href = '" . site_url("anak/detail/") . "/$hash_id';
+               </script>";
+                } else {
+                    //$error = array('error' => $this->upload->display_errors());\
+                    //print_r($error);
+                    echo "<script>alert('Berhasil Tambah Data Anak Tetapi Gagal Upload Poto');
+                location.href = '" . site_url("anak/detail/") . "/$hash_id';
+               </script>";
+                }
+            } else {
+                echo "<script>alert('Gagal Tambah Data anak');
                 history.go(-1);
                </script>";
+            }
         }
     }
 
