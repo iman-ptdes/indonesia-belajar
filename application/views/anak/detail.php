@@ -53,9 +53,13 @@
             }
             ?>
         </div>
+        <?php if (($this->session->userdata('id_pengguna_group') == 2) OR ($this->session->userdata('id_pengguna_group') == 1)) { ?>
         <input type="file" id="foto" name="foto"></br>
         <a class="btn btn-success" href="<?= base_url() ?>index.php/anak/edit/<?= $hash_id ?>">Edit Data Anak</a>
+        <? } ?>
+        <?php if ($this->session->userdata('id_pengguna_group') == 3)  { ?>
         <a class="btn btn-success" href="<?= base_url() ?>index.php/donasi/form/<?= $hash_id ?>">Donasi</a>
+        <? } ?>
        
     </div>
     <div class="col-lg-6 thumbnail">
