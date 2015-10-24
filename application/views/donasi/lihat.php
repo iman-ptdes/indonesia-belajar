@@ -52,32 +52,53 @@ $(document).ready(function() {
             <div class="panel-heading">
                 Data Anak Tidak / Putus Sekolah
             </div>
-            <?= form_open('') ?>							
-            <div class="row" style="padding-left:20px;padding-right:20px">
-                
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>Nama</label>
-                        <input class="form-control" name="nama" id="nama" value="<?= isset($nama)?$nama:''; ?>">
-
-                        <label>Status bersekolah</label>
-                        <?= form_dropdown('status_bersekolah', $status_bersekolah, isset($isi_status_bersekolah)?$isi_status_bersekolah:'', "class='form-control'") ?>
-                    </div>
+            <?= form_open('') ?>	
+    <div class="row" style="padding-left:20px;padding-right:20px">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Nama</label>
+                <input class="form-control" name="nama" id="nama" value="<?= isset($nama) ? $nama : ''; ?>">
+                <label class="col-lg-12" style="padding-left: 0px">Umur</label>
+                <div class="col-lg-4" style="padding-left: 0px;padding-right: 0px">
+                    <input class="form-control" name="umur_awal" id="umur_awal" value="<?= isset($umur_awal) ? $umur_awal : ''; ?>" >
                 </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>Jenis sekolah terakhir</label>
-                        <?= form_dropdown('jenis_sekolah', $jenis_sekolah, isset($isi_jenis_sekolah)?$isi_jenis_sekolah:'', "class='form-control'") ?>	
-
-                        <label>Tingkat sekolah terakhir</label>
-                        <?= form_dropdown('tingkat_sekolah', $tingkat_sekolah, isset($isi_tingkat_sekolah)?$isi_tingkat_sekolah:'' , "class='form-control'") ?>						
-                    </div>
+                <div class="col-lg-4" style="padding-left: 0px;padding-right: 0px">&nbsp;&nbsp;sampai&nbsp;&nbsp;</div>
+                <div class="col-lg-4" style="padding-left: 0px;padding-right: 0px">
+                    <input class="form-control" name="umur_akhir" id="umur_akhir" value="<?= isset($umur_akhir) ? $umur_akhir : ''; ?>" >
                 </div>
+                <label>Jenis Kelamin</label>
+                <?= form_dropdown('jenis_kelamin', $jenis_kelamin, isset($isi_jenis_kelamin) ? $isi_jenis_kelamin : '', "class='form-control'") ?>
+                <label>Sekolah Terakhir</label>
+                <input class="form-control" name="sekolah" id="sekolah" value="<?= isset($sekolah) ? $sekolah : ''; ?>">
             </div>
-            <div class="col-lg-5">
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Alamat</label>
+                <input class="form-control" name="alamat" id="alamat" value="<?= isset($alamat) ? $alamat : ''; ?>">
+                <label>Kota</label>
+                <input class="form-control" name="kota" id="kota" value="<?= isset($kota) ? $kota : ''; ?>">
+                <label>Provinsi</label>
+                <input class="form-control" name="provinsi" id="provinsi" value="<?= isset($provinsi) ? $provinsi : ''; ?>">                        
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Status bersekolah</label>
+                <?= form_dropdown('status_bersekolah', $status_bersekolah, isset($isi_status_bersekolah) ? $isi_status_bersekolah : '', "class='form-control'") ?>
+
+                <label>Jenis sekolah terakhir</label>
+                <?= form_dropdown('jenis_sekolah', $jenis_sekolah, isset($isi_jenis_sekolah) ? $isi_jenis_sekolah : '', "class='form-control'") ?>	
+
+                <label>Tingkat sekolah terakhir</label>
+                <?= form_dropdown('tingkat_sekolah', $tingkat_sekolah, isset($isi_tingkat_sekolah) ? $isi_tingkat_sekolah : '', "class='form-control'") ?>	
+                </br>
+                <input type="hidden" name="cari"  value="cari">
                 <button type="submit" class="btn btn-primary" name="submit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cari&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>&nbsp;&nbsp;&nbsp;&nbsp;
-            </div>														
-			</form>
+            </div>
+        </div>
+    </div>
+</form>
             <!-- /.row (nested) -->
             <br />
             <br />

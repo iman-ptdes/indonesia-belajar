@@ -13,13 +13,54 @@ class Donasi extends CI_Controller {
         $this->load->helper('url', 'form', 'date');
     }
 
+    public function index(){
+        if ($this->session->userdata('id_pengguna_group')=='2'){
+            $where = 'AND pengguna.id_pengguna='.$this->$this->sesison->userdata('id_pengguna');
+        } else {
+            $where = '';
+        }
+        $query = $this->db->query('SELECT donasi.*, pengguna.nama as nama_donatur, anak.nama as nama_anak FROM donasi 
+            LEFT JOIN pengguna ON donasi.id_pengguna=pengguna.id_pengguna
+            LEFT JOIN anak ON donasi.id_anak=anak.id_anak WHERE donasi.status=0 '.$where.' ORDER BY tgl_donasi DESC' );
+
+        $data['data'] = $query->result();
+        $data['jumlah'] = $query->num_rows();
+        $data['content'] = $this->load->view('donasi/list_donasi', $data, true);
+        $this->load->view('main_template', $data);
+    }
+    
     public function lihat() {
         $nama = '';
+        $jenis_kelamin = '';
+        $umur_awal = '';
+        $umur_akhir = '';
+        $alamat = '';
+        $kota = '';
+        $provinsi = '';
         $jenis_sekolah = '';
         $tingkat_sekolah = '';
         $status_bersekolah = '';
+        $jumlah = 0;
         if ($this->input->post('nama') != '') {
             $nama = $this->input->post('nama');
+        }
+        if ($this->input->post('jenis_kelamin') != '') {
+            $jenis_kelamin = $this->input->post('jenis_kelamin');
+        }
+        if ($this->input->post('umur_awal') != '') {
+            $umur_awal = $this->input->post('umur_awal');
+        }
+        if ($this->input->post('umur_akhir') != '') {
+            $umur_akhir = $this->input->post('umur_akhir');
+        }
+        if ($this->input->post('alamat') != '') {
+            $alamat = $this->input->post('alamat');
+        }
+        if ($this->input->post('kota') != '') {
+            $kota = $this->input->post('kota');
+        }
+        if ($this->input->post('provinsi') != '') {
+            $provinsi = $this->input->post('provinsi');
         }
         if ($this->input->post('status_bersekolah') != '') {
             $status_bersekolah = $this->input->post('status_bersekolah');
@@ -30,16 +71,25 @@ class Donasi extends CI_Controller {
         if ($this->input->post('tingkat_sekolah') != '') {
             $tingkat_sekolah = $this->input->post('tingkat_sekolah');
         }
-        
+        if ($this->input->post('cari') == 'cari') {
+            $query = $this->anak_model->cari_anak2($nama, $jenis_kelamin, $umur_awal, $umur_akhir, $alamat, $kota, $provinsi, $status_bersekolah, $jenis_sekolah, $tingkat_sekolah);
 
-        $query = $this->anak_model->cari_anak($nama, $status_bersekolah,$jenis_sekolah, $tingkat_sekolah );
+            $data['data'] = $query->result();
+            $jumlah = $query->num_rows();
+        }
 
-        $data['data'] = $query->result();
-        $data['jumlah'] = $query->num_rows();
+        $data['jumlah'] = $jumlah;
         $data['nama'] = $nama;
+        $data['umur_awal'] = $umur_awal;
+        $data['umur_akhir'] = $umur_akhir;
+        $data['alamat'] = $alamat;
+        $data['kota'] = $kota;
+        $data['provinsi'] = $provinsi;
+        $data['isi_jenis_kelamin'] = $jenis_kelamin;
         $data['isi_jenis_sekolah'] = $jenis_sekolah;
         $data['isi_tingkat_sekolah'] = $tingkat_sekolah;
         $data['isi_status_bersekolah'] = $status_bersekolah;
+        $data['jenis_kelamin'] = $this->form_option->jenis_kelamin2('');
         $data['jenis_sekolah'] = $this->form_option->jenis_sekolah('');
         $data['tingkat_sekolah'] = $this->form_option->tingkat_sekolah('');
         $data['status_bersekolah'] = $this->form_option->status_bersekolah('');
@@ -48,138 +98,111 @@ class Donasi extends CI_Controller {
     }
 
     public function detail($hash_id) {
-        //$query = $this->db_model->get('anak', 'anak.*, pengguna.*', array("md5(sha1(id_anak))" => $hash_id),'','','','',array('pengguna','anak.id_pengguna=pengguna.id_pengguna'));
-        $query = $this->db->query("SELECT anak.*, anak.nama nma, pengguna.nama nm, pengguna.id_pengguna_group, pengguna.jenis_pengguna FROM anak  JOIN pengguna ON pengguna.id_pengguna=anak.id_pengguna WHERE md5(sha1(anak.id_anak))='$hash_id'");
+        $query = $this->db->query('SELECT donasi.*, pengguna.nama as nama_donatur, anak.nama as nama_anak FROM donasi 
+            LEFT JOIN pengguna ON donasi.id_pengguna=pengguna.id_pengguna
+            LEFT JOIN anak ON donasi.id_anak=anak.id_anak WHERE md5(sha1(donasi.id))=\''.$hash_id.'\' ORDER BY tgl_donasi DESC' );
+
         $data['row'] = $query->row();
         $data['hash_id'] = $hash_id;
-        $data['content'] = $this->load->view('anak/detail', $data, true);
+        $data['content'] = $this->load->view('donasi/detail', $data, true);
         $this->load->view('main_template', $data);
     }
 
     public function form($hash_id) {
         $query = $this->db_model->get('anak','*',array("md5(sha1(id_anak))"=>$hash_id));
-		$row = $query->row();
-		$data['nama_anak'] = strtoupper($row->nama);
-		$data['content'] = $this->load->view('donasi/tambah', $data, true);
+        $row = $query->row();
+        $data['nama_anak'] = strtoupper($row->nama);
+        $data['id_anak'] = $row->id_anak;
+        $data['content'] = $this->load->view('donasi/tambah', $data, true);
         $this->load->view('main_template', $data);
     }
 
     public function tambah_db() {
-        // if ($this->input->post('submit'))   
-        date_default_timezone_set('Asia/Jakarta');
+        $tanggal_donasi = date("Y-m-d", strtotime($this->input->post('tanggal_donasi')));
         $data = array(
-            'nama' => $this->input->post('nama'),
-            'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-            'alamat' => $this->input->post('alamat'),
-            'kota' => $this->input->post('kota'),
-            'provinsi' => $this->input->post('provinsi'),
-            'telepon' => $this->input->post('telepon'),
-            'tempat_lahir' => $this->input->post('tempat_lahir'),
-            'tanggal_lahir' => $tanggal_lahir,
-            'umur' => $this->input->post('umur'),
-            'status_tempat_tinggal' => $this->input->post('status_tempat_tinggal'),
-            'status_bersekolah' => $this->input->post('status_bersekolah'),
-            'jenis_sekolah' => $this->input->post('jenis_sekolah'),
-            'tingkat_sekolah' => $this->input->post('tingkat_sekolah'),
-            'sekolah' => $this->input->post('sekolah'),
-            'alamat_sekolah' => $this->input->post('alamat_sekolah'),
-            'alasan' => $this->input->post('alasan'),
-            'ayah' => $this->input->post('ayah'),
-            'pekerjaan_ayah' => $this->input->post('pekerjaan_ayah'),
-            'pendidikan_ayah' => $this->input->post('pendidikan_ayah'),
-            'ibu' => $this->input->post('ibu'),
-            'pekerjaan_ibu' => $this->input->post('pekerjaan_ibu'),
-            'pendidikan_ibu' => $this->input->post('pendidikan_ibu'),
-            'alamat_ortu' => $this->input->post('alamat_ortu'),
-            'pendapatan' => $this->input->post('pendapatan'),
-            'saudara_ke' => $this->input->post('saudara_ke'),
-            'jumlah_saudara' => $this->input->post('jumlah_saudara'),
-            'id_pengguna' => 3,
-            'tanggal_pendaftaran' => date('Y-m-d'),
+            'id_pengguna' => $this->session->userdata('id_pengguna'),
+            'id_anak' => $this->input->post('id_anak'),
+            'tgl_donasi' => $tanggal_donasi,
+            'jumlah' => str_replace(',','.',str_replace('.','',$this->input->post('jumlah'))),
+            'pesan' => $this->input->post('pesan'),
+            'status' => 0
         );
-
-        if ($this->db_model->add('anak', $data)) {
+        
+        if ($this->db_model->add('donasi', $data)) {
             $id = $this->db->insert_id();
             $hash_id = md5(sha1($id));
-            echo "<script>alert('Berhasil Tambah Data Anak');
-                location.href = '" . site_url("anak/detail/") . "/$hash_id';
+            $config = array(
+                'upload_path' => 'images/donasi',
+                'allowed_types' => "jpg",
+                'max_size' => "4000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
+                'max_height' => "1028",
+                'max_width' => "1024",
+                'file_name' => $hash_id
+            );
+            $this->load->library('upload', $config);
+            if ($this->upload->do_upload('donasi_file')) {
+                //$data = array('upload_data' => $this->upload->data());
+                // print_r($this->upload->data());
+            echo "<script>alert('Terima kasih atas donasi yang telah Anda berikan');
+                location.href = '" . site_url("donasi/detail") . "/$hash_id';
                </script>";
+            } else {
+                //$error = array('error' => $this->upload->display_errors());\
+                //print_r($error);
+                echo "<script>alert('Gagal upload bukti transfer');
+            location.href = '" . site_url("donasi/detail/") . "/$hash_id';
+           </script>";
+            }
         } else {
-            echo "<script>alert('Gagal Tambah Data anak');
+            echo "<script>alert('Gagal Tambah Data Donasi');
                 history.go(-1);
                </script>";
         }
     }
 
     public function edit($hash_id) {
-        $query = $this->db_model->get('anak', '*', array("md5(sha1(id_anak))" => $hash_id));
-        $data['row'] = $query->row();
+        $query = $this->db->query('SELECT donasi.*, anak.nama as nama_anak FROM donasi
+        LEFT JOIN anak ON donasi.id_anak=anak.id_anak
+        WHERE md5(sha1(id)) = \''.$hash_id.'\'');
+        $row = $query->row();
+        $data['nama_anak'] = strtoupper($row->nama_anak);
+        $data['row'] = $row;
         $data['hash_id'] = $hash_id;
-        $data['jenis_kelamin'] = $this->form_option->jenis_kelamin('');
-        $data['status_tempat_tinggal'] = $this->form_option->status_tempat_tinggal('');
-        $data['jenis_sekolah'] = $this->form_option->jenis_sekolah('');
-        $data['tingkat_sekolah'] = $this->form_option->tingkat_sekolah('');
-        $data['status_bersekolah'] = $this->form_option->status_bersekolah('');
-        $data['content'] = $this->load->view('anak/edit', $data, true);
+        $data['content'] = $this->load->view('donasi/edit', $data, true);
         $this->load->view('main_template', $data);
     }
 
     public function edit_db() {
-        $tanggal_lahir = date("Y-m-d", strtotime($this->input->post('tanggal_lahir')));
+        $tanggal_donasi = substr($this->input->post('tanggal_donasi'),6,4).'-'.substr($this->input->post('tanggal_donasi'),3,2).'-'.substr($this->input->post('tanggal_donasi'),0,2);
         $data = array(
-            'nama' => $this->input->post('nama'),
-            'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-            'alamat' => $this->input->post('alamat'),
-            'kota' => $this->input->post('kota'),
-            'provinsi' => $this->input->post('provinsi'),
-            'telepon' => $this->input->post('telepon'),
-            'tempat_lahir' => $this->input->post('tempat_lahir'),
-            'tanggal_lahir' => $tanggal_lahir,
-            'umur' => $this->input->post('umur'),
-            'status_tempat_tinggal' => $this->input->post('status_tempat_tinggal'),
-            'status_bersekolah' => $this->input->post('status_bersekolah'),
-            'jenis_sekolah' => $this->input->post('jenis_sekolah'),
-            'tingkat_sekolah' => $this->input->post('tingkat_sekolah'),
-            'sekolah' => $this->input->post('sekolah'),
-            'alamat_sekolah' => $this->input->post('alamat_sekolah'),
-            'alasan' => $this->input->post('alasan'),
-            'ayah' => $this->input->post('ayah'),
-            'pekerjaan_ayah' => $this->input->post('pekerjaan_ayah'),
-            'pendidikan_ayah' => $this->input->post('pendidikan_ayah'),
-            'ibu' => $this->input->post('ibu'),
-            'pekerjaan_ibu' => $this->input->post('pekerjaan_ibu'),
-            'pendidikan_ibu' => $this->input->post('pendidikan_ibu'),
-            'alamat_ortu' => $this->input->post('alamat_ortu'),
-            'pendapatan' => $this->input->post('pendapatan'),
-            'saudara_ke' => $this->input->post('saudara_ke'),
-            'jumlah_saudara' => $this->input->post('jumlah_saudara'),
+            'tgl_donasi' => $tanggal_donasi,
+            'jumlah' => str_replace(',','.',str_replace('.','',$this->input->post('jumlah'))),
+            'pesan' => $this->input->post('pesan')
         );
-
-        if ($this->db_model->update('anak', $data, array("md5(sha1(id_anak))" => $this->input->post('hash_id')))) {
+        
+        if ($this->db_model->update('donasi', $data, array("md5(sha1(id))" => $this->input->post('hash_id')))) {
             $hash_id = $this->input->post('hash_id');
-            echo "<script>alert('Berhasil Edit Data anak');
-                location.href = '" . site_url("anak/detail/") . "/$hash_id';
+            echo "<script>alert('Berhasil Edit Donasi');
+                location.href = '" . site_url("donasi/detail/") . "/$hash_id';
                </script>";
         } else {
-            echo "<script>alert('Gagal Edit Data anak');
+            echo "<script>alert('Gagal Edit Donasi');
                 history.go(-1);
                </script>";
         }
     }
 
-    public function hapus($hash_id) {
-
-        if ($this->db_model->delete('anak', array("md5(sha1(id_anak)) " => $hash_id))) {
-            $targetFolder = 'images/anak'; // Relative to the root
-            if (file_exists($targetFolder . '/' . $hash_id . '.jpg')) {
-                unlink($targetFolder . '/' . $hash_id . '.jpg');
-            }
-            redirect("anak/lihat");
+    public function delete($hash_id) {
+        $data = array(
+            'status' => 2
+        );
+        if ($this->db_model->update('donasi', $data, array("md5(sha1(id)) " => $hash_id))) {
+            redirect("donasi");
         }
     }
 
     public function upload($hash_id = '') {
-        $targetFolder = 'images/anak'; // Relative to the root
+        $targetFolder = 'images/donasi'; // Relative to the root
 
         if (file_exists($targetFolder . '/' . $hash_id . '.jpg')) {
             unlink($targetFolder . '/' . $hash_id . '.jpg');
