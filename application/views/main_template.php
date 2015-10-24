@@ -138,6 +138,7 @@
                 </div>
                 <!-- /.navbar-collapse -->
             </div>
+            </nav>
 
     <!-- Header -->
         <div class="container">

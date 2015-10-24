@@ -118,7 +118,7 @@
                                         <?php if (($this->session->userdata('id_pengguna_group') == 2) OR ($this->session->userdata('id_pengguna_group') == 1)) { ?>
                                         <a href="<?= base_url() ?>index.php/anak/edit/<?= md5(sha1($row->id_anak)) ?>" class="edit"  title="Edit"><img src="<?= base_url('images') ?>/edit.png" style="width:15px;height:15px;"></a>&nbsp;&nbsp;&nbsp;
                                         <a href="<?= base_url() ?>index.php/anak/hapus/<?= md5(sha1($row->id_anak)) ?>" class="delete"  title="Delete" onclick="return confirm('Yakin hapus data?');"><img src="<?= base_url('images') ?>/delete.png" style="width:15px;height:15px;"></a>
-                                        <? } ?>
+                                        <?php } ?>
                                     </td> 
                                 </tr>
                                 <?php $no++; ?>    
