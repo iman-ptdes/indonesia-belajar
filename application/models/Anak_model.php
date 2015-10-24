@@ -28,7 +28,7 @@ class Anak_model extends CI_Model {
         return $this->db->get("anak");
     }
 
-    public function cari_anak2($nama, $jenis_kelamin, $umur_awal, $umur_akhir, $alamat, $kota, $provinsi, $status_bersekolah, $jenis_sekolah, $tingkat_sekolah) {
+    public function cari_anak2($nama, $jenis_kelamin, $umur_awal, $umur_akhir, $alamat, $kota, $provinsi, $status_bersekolah, $jenis_sekolah, $tingkat_sekolah,$id_pengguna) {
         $this->db->select('*');
         if ($nama != '') {
             $this->db->where("nama like '%$nama%' ");
@@ -63,6 +63,9 @@ class Anak_model extends CI_Model {
         }
         if ($tingkat_sekolah != '') {
             $this->db->where("tingkat_sekolah = '$tingkat_sekolah' ");
+        }
+        if ($id_pengguna != '') {
+            $this->db->where("id_pengguna = '$id_pengguna' ");
         }
 
 

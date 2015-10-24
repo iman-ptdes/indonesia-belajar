@@ -396,10 +396,7 @@ class Anak extends CI_Controller {
         $jenis_sekolah = '';
         $tingkat_sekolah = '';
         $status_bersekolah = '';
-        $id_pengguna = $this->session->userdata('id_pengguna');
-        if ($this->session->userdata('id_pengguna_group') != 2) {
-            $id_pengguna = '';
-        }
+        
         $jumlah = 0;
         if ($this->input->post('nama') != '') {
             $nama = $this->input->post('nama');
@@ -431,8 +428,15 @@ class Anak extends CI_Controller {
         if ($this->input->post('tingkat_sekolah') != '') {
             $tingkat_sekolah = $this->input->post('tingkat_sekolah');
         }
+        
+        if ($this->session->userdata('id_pengguna_group') != 2) {
+            $id_pengguna = '';
+        } else {
+            $id_pengguna = $this->session->userdata('id_pengguna');
+        }
+        
         if ($this->input->post('cari') == 'cari') {
-            $query = $this->anak_model->cari_anak2($nama, $jenis_kelamin, $umur_awal, $umur_akhir, $alamat, $kota, $provinsi, $status_bersekolah, $jenis_sekolah, $tingkat_sekolah);
+            $query = $this->anak_model->cari_anak2($nama, $jenis_kelamin, $umur_awal, $umur_akhir, $alamat, $kota, $provinsi, $status_bersekolah, $jenis_sekolah, $tingkat_sekolah,$id_pengguna);
 
             $data['data'] = $query->result();
             $jumlah = $query->num_rows();
