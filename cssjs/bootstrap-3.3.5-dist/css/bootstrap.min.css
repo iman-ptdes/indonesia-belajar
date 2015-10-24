@@ -2967,7 +2967,7 @@ textarea.input-lg {
 .has-error.checkbox-inline label,
 .has-error.radio label,
 .has-error.radio-inline label {
-    color: #a94442
+    color: #fd0303;
 }
 .has-error .form-control {
     border-color: #a94442;
@@ -4645,11 +4645,11 @@ textarea.input-group-sm>.input-group-btn>.btn {
     color: #777
 }
 .navbar-default .navbar-nav>li>a {
-    color: #777
+    color: #fff;
 }
 .navbar-default .navbar-nav>li>a:focus,
 .navbar-default .navbar-nav>li>a:hover {
-    color: #333;
+    color: #67cce1;
     background-color: transparent
 }
 .navbar-default .navbar-nav>.active>a,

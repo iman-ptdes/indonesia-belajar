@@ -8,12 +8,14 @@ class Anak extends CI_Controller {
     public function __construct() {
         parent::__construct();
         /* load model */
-        //        if ($this->session->userdata('id_pengguna')==null){
-        //			redirect('login');
-        //}
+
         $this->load->model(array('db_model', 'anak_model'));
         $this->load->library(array('pagination', 'form_validation', 'form_option', 'convertion'));
         $this->load->helper('url', 'form', 'date');
+        if ($this->session->userdata('id_pengguna') == null) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
     }
 
     public function lihat() {
@@ -61,9 +63,11 @@ class Anak extends CI_Controller {
     }
 
     public function tambah() {
-        //        if ($this->session->userdata('id_pengguna')==2){
-//			redirect('login');
-//		}
+        if ($this->session->userdata('id_pengguna_group') == 2) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
+        
         $data['jenis_kelamin'] = $this->form_option->jenis_kelamin('');
         $data['status_tempat_tinggal'] = $this->form_option->status_tempat_tinggal('');
         $data['jenis_sekolah'] = $this->form_option->jenis_sekolah('');
@@ -74,9 +78,11 @@ class Anak extends CI_Controller {
     }
 
     public function tambah_db() {
-        //        if ($this->session->userdata('id_pengguna')==2){
-//			redirect('login');
-//		}
+        if ($this->session->userdata('id_pengguna_group') == 2) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
+        
         // if ($this->input->post('submit'))   
         if ($this->input->post('tanggal_lahir') == '') {
             if ($this->input->post('umur') == '') {
@@ -125,8 +131,8 @@ class Anak extends CI_Controller {
                 'pendapatan' => $this->input->post('pendapatan'),
                 'saudara_ke' => $this->input->post('saudara_ke'),
                 'jumlah_saudara' => $this->input->post('jumlah_saudara'),
-                //'id_pengguna' => $this->session->userdata('id_pengguna'),
-                'id_pengguna' => 3,
+                'id_pengguna' => $this->session->userdata('id_pengguna'),
+                //'id_pengguna' => 3,
                 //'foto_profil' => $this->input->post('userfile'),
                 'tanggal_pendaftaran' => date('Y-m-d'),
             );
@@ -166,9 +172,11 @@ class Anak extends CI_Controller {
     }
 
     public function edit($hash_id) {
-        //        if ($this->session->userdata('id_pengguna')==2){
-//			redirect('login');
-//		}
+        if ($this->session->userdata('id_pengguna_group') == 2) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
+        
         $query = $this->db_model->get('anak', '*', array("md5(sha1(id_anak))" => $hash_id));
         $data['row'] = $query->row();
         $data['hash_id'] = $hash_id;
@@ -182,8 +190,10 @@ class Anak extends CI_Controller {
     }
 
     public function edit_db() {
-        //        if ($this->session->userdata('id_pengguna')==2){
-//			redirect('login');
+        if ($this->session->userdata('id_pengguna_group') == 2) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
 //		} if ($this->input->post('tanggal_lahir') == '' ){
         if ($this->input->post('tanggal_lahir') == '') {
             if ($this->input->post('umur') == '') {
@@ -248,9 +258,10 @@ class Anak extends CI_Controller {
     }
 
     public function upload($hash_id = '') {
-        //        if ($this->session->userdata('id_pengguna')==2){
-//			redirect('login');
-//		}
+        if ($this->session->userdata('id_pengguna_group') == 2) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
         $targetFolder = 'images/anak'; // Relative to the root
 
         if (file_exists($targetFolder . '/' . $hash_id . '.jpg')) {

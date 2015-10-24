@@ -11,9 +11,15 @@ class Pengguna extends CI_Controller {
         $this->load->model(array('db_model', 'pengguna_model'));
         $this->load->library(array('pagination', 'form_validation', 'form_option', 'convertion'));
         $this->load->helper('url', 'form', 'date');
+        
     }
 
     public function lihat() {
+        if ($this->session->userdata('id_pengguna_group') != 1) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
+        
         $nama = '';
         $username = '';
         $status_pengguna = '';
@@ -57,6 +63,11 @@ class Pengguna extends CI_Controller {
     }
 
     public function detail($hash_id) {
+        if ($this->session->userdata('id_pengguna_group') == null) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
+        
         $query = $this->db_model->get('pengguna', '*', array("md5(sha1(id_pengguna))" => $hash_id));
         $data['row'] = $query->row();
         $data['hash_id'] = $hash_id;
@@ -65,6 +76,19 @@ class Pengguna extends CI_Controller {
     }
 
     public function tambah() {
+        if ($this->session->userdata('id_pengguna_group') == 1) {
+            echo "<script>location.href = '" . site_url("pengguna/lihat") . "';
+		</script>";
+        } else if ($this->session->userdata('id_pengguna_group') == 2) {
+            echo "<script>location.href = '" . site_url("anak/cari") . "';
+		</script>";
+        }else if ($this->session->userdata('id_pengguna_group') == 3) {
+            echo "<script>location.href = '" . site_url("donatur/lihat") . "';
+		</script>";
+        }else if ($this->session->userdata('id_pengguna_group') == 4) {
+            echo "<script>location.href = '" . site_url("anak/cari") . "';
+		</script>";
+        }
         //$data['label_menu'] = 'Klien';
         $data['jenis_pengguna'] = $this->form_option->jenis_pengguna('');
         $data['group_pengguna'] = $this->form_option->group_pengguna('');
@@ -72,45 +96,45 @@ class Pengguna extends CI_Controller {
         $data['content'] = $this->load->view('pengguna/tambah', $data, true);
         $this->load->view('home', $data);
     }
-	
-	public function login() {
-		$data['username_error'] = '';
-		$data['password_error'] = '';
-		$username = $this->input->post('username');
-		$password = sha1(sha1(md5($this->input->post('password'))));
-		$query = $this->db_model->get('pengguna', '*', array('username'=>$username));
-		if ($query->num_rows()==0){
-			$data['error'] = '<script>alert("Username tidak ditemukan")</script>';
-		} else {
-			$query = $this->db_model->get('pengguna', '*', array('username'=>$username,'status'=>0));
-			if ($query->num_rows()>0){
-				$data['error'] = '<script>alert("Username tidak aktif")</script>';
-			} else {
-				$query = $this->db_model->get('pengguna', '*', array('username'=>$username,'status'=>1,'password'=>$password));
-				if ($query->num_rows()==0){
-					$data['error'] = '<script>alert("Password tidak sesuai")</script>';
-				} else {
-					$row = $query->row();
-					$login_data = array(
-						'id_pengguna'	=>	$row->id_pengguna,
-						'username'	=>  $row->username,
-						'id_pengguna_group'	=>  $row->id_pengguna_group,
-                        'nama'	=>  $row->nama
-					);
-					$this->session->set_userdata($login_data);
-					if ($row->id_pengguna_group==1){ //administrator
-						redirect('anak/lihat');
-					} else if ($row->id_pengguna_group==2){ //data entri
-						redirect('anak/lihat');
-					} else if ($row->id_pengguna_group==3){ //donatur
-						redirect('donasi/lihat');
-					} else if ($row->id_pengguna_group==4){ //pemerintah
-						redirect('anak/lihat');
-					}
-					break;
-				}
-			}
-		}
+
+    public function login() {
+        $data['username_error'] = '';
+        $data['password_error'] = '';
+        $username = $this->input->post('username');
+        $password = sha1(sha1(md5($this->input->post('password'))));
+        $query = $this->db_model->get('pengguna', '*', array('username' => $username));
+        if ($query->num_rows() == 0) {
+            $data['error'] = '<script>alert("Username tidak ditemukan")</script>';
+        } else {
+            $query = $this->db_model->get('pengguna', '*', array('username' => $username, 'status' => 0));
+            if ($query->num_rows() > 0) {
+                $data['error'] = '<script>alert("Username tidak aktif")</script>';
+            } else {
+                $query = $this->db_model->get('pengguna', '*', array('username' => $username, 'status' => 1, 'password' => $password));
+                if ($query->num_rows() == 0) {
+                    $data['error'] = '<script>alert("Password tidak sesuai")</script>';
+                } else {
+                    $row = $query->row();
+                    $login_data = array(
+                        'id_pengguna' => $row->id_pengguna,
+                        'username' => $row->username,
+                        'id_pengguna_group' => $row->id_pengguna_group,
+                        'nama' => $row->nama
+                    );
+                    $this->session->set_userdata($login_data);
+                    if ($row->id_pengguna_group == 1) { //administrator
+                        redirect('pengguna/lihat');
+                    } else if ($row->id_pengguna_group == 2) { //data entri
+                        redirect('anak/cari');
+                    } else if ($row->id_pengguna_group == 3) { //donatur
+                        redirect('donasi/lihat');
+                    } else if ($row->id_pengguna_group == 4) { //pemerintah
+                        redirect('anak/cari');
+                    }
+                    break;
+                }
+            }
+        }
         $data['jenis_pengguna'] = $this->form_option->jenis_pengguna('');
         $data['group_pengguna'] = $this->form_option->group_pengguna('');
         $data['jenis_identitas'] = $this->form_option->jenis_identitas('');
@@ -177,7 +201,7 @@ class Pengguna extends CI_Controller {
                 $config['crlf'] = "\r\n";
                 $config['newline'] = "\r\n";
                 $config['wordwrap'] = TRUE;
-                
+
                 //memanggil library email dan set konfigurasi untuk pengiriman email
                 $this->email->initialize($config);
                 //konfigurasi pengiriman
@@ -199,7 +223,6 @@ class Pengguna extends CI_Controller {
                         location.href = '" . base_url("") . "';
                         </script>";
                 }
-                
             } else {
                 echo "<script>alert('Gagal Tambah Data Pengguna');
                 location.href = '" . base_url("") . "';
@@ -207,10 +230,10 @@ class Pengguna extends CI_Controller {
             }
         }
     }
-    
+
     public function verification($hash_id) {
-       
-        if ($this->db_model->update('pengguna',array("status" => 1), array("md5(sha1(id_pengguna))" => $hash_id))) {
+
+        if ($this->db_model->update('pengguna', array("status" => 1), array("md5(sha1(id_pengguna))" => $hash_id))) {
             echo "<script>alert('Akun anda telah diverifikasi, silahkan login');
                         location.href = '" . base_url("") . "';
                         </script>";
@@ -218,6 +241,11 @@ class Pengguna extends CI_Controller {
     }
 
     public function edit($hash_id) {
+        if ($this->session->userdata('id_pengguna_group') == null) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
+        
         $query = $this->db_model->get('pengguna', '*', array("md5(sha1(id_pengguna))" => $hash_id));
         $data['row'] = $query->row();
         $data['hash_id'] = $hash_id;
@@ -229,6 +257,11 @@ class Pengguna extends CI_Controller {
     }
 
     public function edit_db() {
+        if ($this->session->userdata('id_pengguna_group') == null) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
+        
         $hash_id = $this->input->post('hash_id');
 //        $data_check = array(
 //            'username' => $this->input->post('username'),
@@ -282,6 +315,10 @@ class Pengguna extends CI_Controller {
     }
 
     public function nonaktif($hash_id) {
+        if ($this->session->userdata('id_pengguna_group') != 1) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
 
         if ($this->db_model->update('pengguna', array('status' => 0), array("md5(sha1(id_pengguna)) " => $hash_id))) {
             redirect("pengguna/lihat");
@@ -289,6 +326,10 @@ class Pengguna extends CI_Controller {
     }
 
     public function aktif($hash_id) {
+        if ($this->session->userdata('id_pengguna_group') != 1) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
 
         if ($this->db_model->update('pengguna', array('status' => 1), array("md5(sha1(id_pengguna)) " => $hash_id))) {
             redirect("pengguna/lihat");
@@ -296,6 +337,10 @@ class Pengguna extends CI_Controller {
     }
 
     public function hapus($hash_id) {
+        if ($this->session->userdata('id_pengguna_group') != null) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
 
         if ($this->db_model->delete('pengguna', array("md5(sha1(id_pengguna)) " => $hash_id))) {
             $targetFolder = 'images/pengguna'; // Relative to the root
@@ -307,6 +352,11 @@ class Pengguna extends CI_Controller {
     }
 
     public function upload($id = '') {
+        if ($this->session->userdata('id_pengguna') == null) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
+        
         $targetFolder = 'images/pengguna'; // Relative to the root
 
         if (file_exists($targetFolder . '/' . $id . '.jpg')) {
@@ -333,65 +383,61 @@ class Pengguna extends CI_Controller {
         }
     }
 
-    
+    public function email() {
 
-    
-     public function email() {
-    
-    //passing post data dari view
-$hash_id = 'dhflojdsfflajdsf';
-                $email = 'ligatyayan@ptdes.net';
+        //passing post data dari view
+        $hash_id = 'dhflojdsfflajdsf';
+        $email = 'ligatyayan@ptdes.net';
 
-                //memasukan ke array
+        //memasukan ke array
 
-                $this->load->library('email');
-                $config = array();
-                $config['charset'] = 'utf-8';
-                $config['useragent'] = 'Codeigniter';
-                $config['protocol'] = "smtp";
-                $config['mailtype'] = "html";
-                $config['smtp_host'] = "ssl://smtp.gmail.com"; //pengaturan smtp
-                $config['smtp_port'] = "465";
-                $config['smtp_timeout'] = "400";
-                $config['smtp_user'] = "pengelolaindonesiabelajar@gmail.com"; // isi dengan email kamu
-                $config['smtp_pass'] = "sandipengelola"; // isi dengan password kamu
-                $config['crlf'] = "\r\n";
-                $config['newline'] = "\r\n";
-                $config['wordwrap'] = TRUE;
-                //memanggil library email dan set konfigurasi untuk pengiriman email
+        $this->load->library('email');
+        $config = array();
+        $config['charset'] = 'utf-8';
+        $config['useragent'] = 'Codeigniter';
+        $config['protocol'] = "smtp";
+        $config['mailtype'] = "html";
+        $config['smtp_host'] = "ssl://smtp.gmail.com"; //pengaturan smtp
+        $config['smtp_port'] = "465";
+        $config['smtp_timeout'] = "400";
+        $config['smtp_user'] = "pengelolaindonesiabelajar@gmail.com"; // isi dengan email kamu
+        $config['smtp_pass'] = "sandipengelola"; // isi dengan password kamu
+        $config['crlf'] = "\r\n";
+        $config['newline'] = "\r\n";
+        $config['wordwrap'] = TRUE;
+        //memanggil library email dan set konfigurasi untuk pengiriman email
 
-                $this->email->initialize($config);
-                //konfigurasi pengiriman
-                $this->email->from($config['smtp_user']);
-                $this->email->to($email);
-                $this->email->subject("Verifikasi Akun Indonesia Belajar");
-                $this->email->message(
-                        "terimakasih telah melakuan registrasi, untuk memverifikasi silahkan klik tautan dibawah ini<br><br>
+        $this->email->initialize($config);
+        //konfigurasi pengiriman
+        $this->email->from($config['smtp_user']);
+        $this->email->to($email);
+        $this->email->subject("Verifikasi Akun Indonesia Belajar");
+        $this->email->message(
+                "terimakasih telah melakuan registrasi, untuk memverifikasi silahkan klik tautan dibawah ini<br><br>
 			<a href='" . site_url("pengguna/verification/$hash_id") . "'>Tautan Verifikasi</a>"
-                );
+        );
 
-                if ($this->email->send()) {
+        if ($this->email->send()) {
 
-                    echo "<script>alert('Berhasil melakukan registrasi, silahkan cek email kamu');
+            echo "<script>alert('Berhasil melakukan registrasi, silahkan cek email kamu');
                         location.href = '" . base_url("") . "';
                         </script>";
-                } else {
-                    echo "<script>alert('Gagal mengirim verifikasi email, Silahkan register ulang');
+        } else {
+            echo "<script>alert('Gagal mengirim verifikasi email, Silahkan register ulang');
                         location.href = '" . base_url("") . "';
                         </script>";
-                }
-                
-}
+        }
+    }
 
- public function email2() {
-    
-    //passing post data dari view
-$hash_id = 'dhflojdsfflajdsf';
-                $email = 'ligatyayan@ptdes.net';
+    public function email2() {
 
-                //memasukan ke array
+        //passing post data dari view
+        $hash_id = 'dhflojdsfflajdsf';
+        $email = 'ligatyayan@ptdes.net';
 
- $config = Array(
+        //memasukan ke array
+
+        $config = Array(
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'smtp_port' => 465,
@@ -417,7 +463,16 @@ $hash_id = 'dhflojdsfflajdsf';
 
             show_error($this->email->print_debugger());
         }
-                
-}
+    }
+
+    public function logout() {
+        if ($this->session->userdata('id_pengguna') == null) {
+            echo "<script>location.href = '" . base_url() . "';
+		</script>";
+        }
+        $this->session->sess_destroy();
+        echo "<script>location.href = '" . base_url(). "';
+			</script>";
+    }
 
 }

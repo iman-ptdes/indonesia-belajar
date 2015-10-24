@@ -66,12 +66,12 @@
     <header class="konten">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <div style="width:450px; height:450px; margin-top:100px;">
-                        <img class="img-responsive" src="<?php echo base_url('images/indonesia-belajar.png')?>">
+                <div class="col-md-4 col-xs-12">
+                    <div style="margin-top:30px;">
+                        <center><img class="img-responsive" src="<?php echo base_url('images/indonesia-belajar.png')?>"></center>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8 col-xs-12">
                     <script type="text/javascript">
                         $(document).ready(function () {
                             $('#formDaftar').bootstrapValidator({
@@ -352,12 +352,12 @@
     </header>
 
     <!-- Footer -->
-    <footer class="text-center">
+    <footer class="text-center l-footer l-subfooter.at_bottom">
         <div class="footer-below">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy; Desnet2015
+                        Copyright &copy; TimDesember2015
                     </div>
                 </div>
             </div>
