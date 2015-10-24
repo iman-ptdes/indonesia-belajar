@@ -16,17 +16,12 @@
     });
 </script>
 
-<div class="col-lg-12">
+<div class="col-lg-10 col-lg-offset-1">
     <div class="page-header">
-        <h2>Data Pengguna</h2>
+        <h2>Data Anak</h2>
     </div>
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Data Tabel Pengguna 
-            </div>
-            <?= form_open('') ?>							
-            <div class="row" style="padding-left:20px;padding-right:20px">
+    <?= form_open('') ?>	
+    <div class="row" style="padding-left:20px;padding-right:20px">
 
                 <div class="col-lg-4">
                     <div class="form-group">
@@ -45,9 +40,10 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
+                        <?php if ($this->session->userdata('id_pengguna_group') == 1) { ?>
                         <label>Status</label>
                         <?= form_dropdown('status_pengguna', $status_pengguna, isset($isi_status_pengguna) ? $isi_status_pengguna : '', "class='form-control'") ?>
-
+                        <?php } ?>
                         <label>Jenis Pengguna</label>
                         <?= form_dropdown('jenis_pengguna', $jenis_pengguna, isset($isi_jenis_pengguna) ? $isi_jenis_pengguna : '', "class='form-control'") ?>	
                         </br>
@@ -56,10 +52,87 @@
                     </div>
                 </div>
             </div>												
-            </form>
+           </form>
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Data Tabel Anak
+        </div>
             <!-- /.row (nested) -->
             <div class="panel-body">
+                
                 <div class="dataTable_wrapper">
+                    <table class="table table-hover" id="data_pengguna">
+                        <thead>
+                            <tr>
+                                <th data-field="Anak"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if ($jumlah > 0) {
+                                $no = 1;
+                                foreach ($data as $row) {
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            
+                                            <div class="col-lg-2 thumbnail">
+                                                <?php
+                                                $hash_id = md5(sha1($row->id_pengguna));
+                                                $filename = "images/pengguna/" . $hash_id . ".jpg";
+                                                if (file_exists($filename)) {
+                                                    ?>
+                                                    <img id="img"  class="img-rounded" src="<?= base_url(); ?><?= $filename; ?>" alt="Foto" style="height:150px;" class="img-thumbnail">                
+                                                    <?php
+                                                } else {
+                                                    ?>
+                                                    <img id="img"  class="img-rounded" src="<?= base_url(); ?>images/pengguna/noimage.jpg" alt="Foto" style="height:150px;" class="img-thumbnail">                                        
+                                                    <?php
+                                                }
+                                                ?>
+                                            </div>
+                                            <div class="row">
+                                            <div class="col-lg-6">
+                                                <h4><?php echo isset($row->nama) ? $row->nama : ''; ?></h4>
+                                                
+                                                <p style="font-size:12pt;">
+                                                    <?php echo isset($row->alamat) ? $row->alamat : ''; ?>
+                                                </p>
+                                                <p style="font-size:12pt;">
+                                                    <?php echo isset($row->kota) ? $row->kota . ', ' : ''; ?><?php echo isset($row->provinsi) ? $row->provinsi : ''; ?><br/>
+                                                </p>
+                                                
+                                                <p>
+                                                    <a href="<?= base_url() ?>index.php/pengguna/detail/<?= md5(sha1($row->id_pengguna)) ?>" class="btn btn-primary">Detail</a>&nbsp;
+                                                    <?php if ($this->session->userdata('id_pengguna_group') == 1) { ?>
+                                                        <a href="<?= base_url() ?>index.php/pengguna/edit/<?= md5(sha1($row->id_pengguna)) ?>" class="btn btn-primary" >Edit</a>&nbsp;
+                                                        <?php
+                                                        $status = isset($row->status) ? $row->status : '';
+                                                        if ($status == 1) { ?>
+                                                            <a href="<?= base_url() ?>index.php/pengguna/nonaktif/<?= md5(sha1($row->id_pengguna)) ?>" class="btn btn-primary" onclick="return confirm('Anda ingin menonaktifkan pengguna?');">Non Aktifkan Pengguna</a>&nbsp;
+                                                            <?php } else { ?>	
+                                                            <a href="<?= base_url() ?>index.php/pengguna/aktif/<?= md5(sha1($row->id_pengguna)) ?>" class="btn btn-primary" onclick="return confirm('Anda ingin menonaktifkan pengguna?');">Aktifkan Pengguna</a>&nbsp;
+                                                            <a href="<?= base_url() ?>index.php/anak/hapus/<?= md5(sha1($row->id_pengguna)) ?>" class="btn btn-primary" onclick="return confirm('Yakin hapus data?');">Hapus</a>&nbsp;
+                                                        <?php } ?>
+                                                            <a href="<?= base_url() ?>index.php/anak/hapus/<?= md5(sha1($row->id_pengguna)) ?>" class="btn btn-primary" onclick="return confirm('Yakin hapus data?');">Hapus</a>&nbsp;
+                                                    <?php } ?>
+                                                </p>
+                                            </div>
+                                                </div>
+                                        </td>
+                                    </tr>
+                                    <?php $no++; ?>    
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                
+                
+<!--                <div class="dataTable_wrapper">
                     <table class="table table-striped table-bordered table-hover" id="data_pengguna">
                         <thead>
                             <tr>
@@ -115,7 +188,7 @@
                             ?>									
                         </tbody>
                     </table>
-                </div>
+                </div>-->
                 <!-- /.table-responsive -->
             </div>
             <!-- /.panel-body -->

@@ -89,7 +89,7 @@ class Pengguna extends CI_Controller {
             echo "<script>location.href = '" . site_url("anak/cari") . "';
 		</script>";
         } else if ($this->session->userdata('id_pengguna_group') == 3) {
-            echo "<script>location.href = '" . site_url("donatur/lihat") . "';
+            echo "<script>location.href = '" . site_url("anak/cari") . "';
 		</script>";
         } else if ($this->session->userdata('id_pengguna_group') == 4) {
             echo "<script>location.href = '" . site_url("anak/cari") . "';

@@ -77,8 +77,13 @@
 
         <div class="panel-body">
             
-                            <div class="dataTable_wrapper">
+                <div class="dataTable_wrapper">
                     <table class="table table-hover" id="data_anak">
+                        <thead>
+                            <tr>
+                                <th data-field="Anak"></th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <?php
                             if ($jumlah > 0) {
