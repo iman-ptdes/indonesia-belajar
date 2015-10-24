@@ -83,7 +83,7 @@
                                         <td><?php echo $no; ?></td>
                                         <td><?php echo isset($row->nama) ? $row->nama : ''; ?></td>
                                         <?php
-                                        if ($this->input->post('group_pengguna') == 1) {
+                                        if ($this->session->userdata('id_pengguna') == 1) {
                                             $status = isset($row->status) ? $row->status : '';
                                             if ($status == 1) {
                                                 ?>
@@ -97,7 +97,7 @@
                                         <td><?php echo isset($row->jenis_pengguna) ? $row->jenis_pengguna : ''; ?></td>
                                         <td align="center">
                                             <a href="<?= base_url() ?>index.php/pengguna/detail/<?= md5(sha1($row->id_pengguna)) ?>" class="detail"  title="Detail"><img src="<?= base_url('images') ?>/detail.png" style="width:15px;height:15px;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <?php if ($this->input->post('group_pengguna') == 1) { ?>
+                                            <?php if ($this->session->userdata('id_pengguna') == 1) { ?>
                                                 <a href="<?= base_url() ?>index.php/pengguna/edit/<?= md5(sha1($row->id_pengguna)) ?>" class="edit"  title="Edit"><img src="<?= base_url('images') ?>/edit.png" style="width:15px;height:15px;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <?php if ($status == 1) {
                                                     ?>
