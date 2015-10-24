@@ -2967,7 +2967,7 @@ textarea.input-lg {
 .has-error.checkbox-inline label,
 .has-error.radio label,
 .has-error.radio-inline label {
-    color: #a94442
+    color: #fcff8c;
 }
 .has-error .form-control {
     border-color: #a94442;
