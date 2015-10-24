@@ -16,15 +16,12 @@ class Donasi extends CI_Controller {
     public function index(){
         if ($this->session->userdata('id_pengguna_group')=='3'){
             $where = 'AND pengguna.id_pengguna='.$this->session->userdata('id_pengguna');
-        } else if ($this->session->userdata('id_pengguna_group')=='2'){
-            $where = 'AND anak.id_pengguna='.$this->session->userdata('id_pengguna');
         } else {
             $where = '';
         }
-        $query = $this->db->query('SELECT donasi.*, pengguna.nama as nama_donatur, anak.nama as nama_anak FROM donasi 
+        $query = $this->db->query('SELECT donasi.*, pengguna.nama as nama_donatur, anak.nama as nama_anak, anak.id_anak FROM donasi 
             LEFT JOIN pengguna ON donasi.id_pengguna=pengguna.id_pengguna
             LEFT JOIN anak ON donasi.id_anak=anak.id_anak WHERE donasi.status=0 '.$where.' ORDER BY tgl_donasi DESC' );
-
         $data['data'] = $query->result();
         $data['jumlah'] = $query->num_rows();
         $data['content'] = $this->load->view('donasi/list_donasi', $data, true);
@@ -33,9 +30,9 @@ class Donasi extends CI_Controller {
     
     public function konfirmasi(){
         if ($this->session->userdata('id_pengguna_group')=='3'){
-            $where = 'AND pengguna.id_pengguna='.$this->$this->sesison->userdata('id_pengguna');
+            $where = 'AND pengguna.id_pengguna='.$this->session->userdata('id_pengguna');
         } else if ($this->session->userdata('id_pengguna_group')=='2'){
-            $where = 'AND anak.id_pengguna='.$this->$this->sesison->userdata('id_pengguna');
+            $where = 'AND anak.id_pengguna='.$this->session->userdata('id_pengguna');
         } else {
             $where = '';
         }
@@ -99,7 +96,7 @@ class Donasi extends CI_Controller {
             $tingkat_sekolah = $this->input->post('tingkat_sekolah');
         }
         if ($this->input->post('cari') == 'cari') {
-            $query = $this->anak_model->cari_anak2($nama, $jenis_kelamin, $umur_awal, $umur_akhir, $alamat, $kota, $provinsi, $status_bersekolah, $jenis_sekolah, $tingkat_sekolah);
+            $query = $this->anak_model->cari_anak2($nama, $jenis_kelamin, $umur_awal, $umur_akhir, $alamat, $kota, $provinsi, $status_bersekolah, $jenis_sekolah, $tingkat_sekolah,'');
 
             $data['data'] = $query->result();
             $jumlah = $query->num_rows();
@@ -225,6 +222,24 @@ class Donasi extends CI_Controller {
         );
         if ($this->db_model->update('donasi', $data, array("md5(sha1(id)) " => $hash_id))) {
             redirect("donasi");
+        }
+    }
+    
+    public function diterima($hash_id) {
+        $data = array(
+            'status' => 1
+        );
+        if ($this->db_model->update('donasi', $data, array("md5(sha1(id)) " => $hash_id))) {
+            redirect("donasi/konfirmasi");
+        }
+    }
+    
+    public function dibatalkan($hash_id) {
+        $data = array(
+            'status' => 0
+        );
+        if ($this->db_model->update('donasi', $data, array("md5(sha1(id)) " => $hash_id))) {
+            redirect("donasi/konfirmasi");
         }
     }
 
@@ -388,7 +403,7 @@ class Donasi extends CI_Controller {
             $tingkat_sekolah = $this->input->post('tingkat_sekolah');
         }
         if ($this->input->post('cari') == 'cari')   {
-            $query = $this->anak_model->cari_anak2($nama,$jenis_kelamin,$umur,$alamat,$kota,$provinsi, $status_bersekolah,$jenis_sekolah, $tingkat_sekolah );
+            $query = $this->anak_model->cari_anak2($nama,$jenis_kelamin,$umur,$alamat,$kota,$provinsi, $status_bersekolah,$jenis_sekolah, $tingkat_sekolah,'' );
            
             $data['data'] = $query->result();
             $jumlah = $query->num_rows();
