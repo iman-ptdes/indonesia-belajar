@@ -62,7 +62,7 @@
 
     <!-- Header -->
         <div class="container konten">
-            <div class="row" style="padding-top:50px;">
+            <div class="row" style="padding-top:25px; padding-bottom: 25px;">
                 <section>
                     <?php echo $content; ?>
                 </section>
@@ -70,12 +70,12 @@
         </div>
 
     <!-- Footer -->
-    <footer class="text-center">
+    <footer class="text-center l-footer l-subfooter.at_bottom">
         <div class="footer-below">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy; Desnet2015
+                        Copyright &copy; TimDesember2015
                     </div>
                 </div>
             </div>
