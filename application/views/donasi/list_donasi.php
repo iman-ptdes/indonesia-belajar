@@ -30,13 +30,7 @@
                     <table class="table table-striped table-bordered table-hover" id="data_donasi">
                         <thead>
                             <tr>
-                                <th data-field="Nomor">No.</th>
-                                <th data-field="Tanggal">Tanggal Donasi</th>
-                                <th data-field="Anak">Nama Anak</th>
-                                <th data-field="Jumlah">Jumlah</th>
-                                <th data-field="Pesan">Pesan</th>
-                                <th data-field="Donatur">Donatur</th>
-                                <th data-field="Aksi">Aksi</th>
+                                <th data-field="Donasi">Data Donasi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,19 +40,33 @@
                                 foreach ($data as $row) {
                                     ?>
                                     <tr>
-                                        <td align="right"><?php echo $no; ?></td>
-                                        <td align="center"><?php echo isset($row->tgl_donasi) ? date('d/m/Y',strtotime($row->tgl_donasi)) : ''; ?></td>
-                                        <td><?php echo isset($row->nama_anak) ? $row->nama_anak : ''; ?></td>
-                                        <td align="right"><?php echo isset($row->jumlah) ? number_format($row->jumlah,0,',','.') : ''; ?></td>
-                                        <td><?php echo isset($row->pesan) ? $row->pesan : ''; ?></td>
-                                        <td><?php echo isset($row->nama_donatur) ? $row->nama_donatur : ''; ?></td>
-                                        <td align="center">
-                                            <a href="<?= base_url() ?>index.php/donasi/detail/<?= md5(sha1($row->id)) ?>" class="detail"  title="Detail"><img src="<?= base_url('images') ?>/detail.png" style="width:15px;height:15px;"></a>&nbsp;&nbsp;
+                                        <td><div class="col-lg-3 thumbnail">
+                                <?php
+                                $hash_id = md5(sha1($row->id));
+                                $filename = "images/anak/" . $hash_id . ".jpg";
+                                if (file_exists($filename)) {
+                                        ?>
+                                        <img id="img"  class="img-rounded" src="<?= base_url(); ?><?= $filename; ?>" alt="Foto" style="height:200px;" class="img-thumbnail">                
+                                        <?php
+                                } else {
+                                        ?>
+                                        <img id="img"  class="img-rounded" src="<?= base_url(); ?>images/pengguna/noimage.jpg" alt="Foto" style="height:200px;" class="img-thumbnail">                                        
+                                        <?php
+                                }
+                                ?>
+                            </div>
+                            <div class="col-lg-6">
+                                <h4><?php echo isset($row->nama_anak) ? $row->nama_anak : ''; ?></h4>
+                                <p style="font-size:12pt;">Tanggal Donasi : <?php echo isset($row->tgl_donasi) ? date('d-m-Y',strtotime($row->tgl_donasi)) : ''; ?><br/>
+                                Jumlah Donasi : <?php echo isset($row->jumlah) ? number_format($row->jumlah,0,',','.') : ''; ?><br/>
+                                Pesan : <?php echo isset($row->pesan) ? $row->pesan : ''; ?><br/>
+                                Donatur : <?php echo isset($row->nama_donatur) ? $row->nama_donatur : ''; ?></p>
+                                <p><a href="<?= base_url() ?>index.php/donasi/detail/<?= md5(sha1($row->id)) ?>" class="detail btn btn-primary" title="Detail"><img src="<?= base_url('images') ?>/detail.png" style="width:15px;height:15px;"> Detail</a>&nbsp;&nbsp;
                                             <?php if($row->status==0){ ?>
-                                            <a href="<?= base_url() ?>index.php/donasi/edit/<?= md5(sha1($row->id)) ?>" class="edit"  title="Edit"><img src="<?= base_url('images') ?>/edit.png" style="width:15px;height:15px;"></a>&nbsp;&nbsp;&nbsp;
-                                            <a href="<?= base_url() ?>index.php/donasi/delete/<?= md5(sha1($row->id)) ?>" class="delete"  title="Delete" onclick="return confirm('Yakin hapus data?');"><img src="<?= base_url('images') ?>/delete.png" style="width:15px;height:15px;"></a>
-                                            <?php } ?>
-                                        </td> 
+                                            <a href="<?= base_url() ?>index.php/donasi/edit/<?= md5(sha1($row->id)) ?>" class="edit btn btn-primary"  title="Edit"><img src="<?= base_url('images') ?>/edit.png" style="width:15px;height:15px;"> Ubah</a>&nbsp;&nbsp;&nbsp;
+                                            <a href="<?= base_url() ?>index.php/donasi/delete/<?= md5(sha1($row->id)) ?>" class="delete btn btn-primary"  title="Delete" onclick="return confirm('Yakin hapus data?');"><img src="<?= base_url('images') ?>/delete.png" style="width:15px;height:15px;"> Hapus</a>
+                                            <?php } ?></p>
+                            </div>    </td>
                                     </tr>
                                     <?php $no++; ?>    
                                     <?php
