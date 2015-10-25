@@ -101,7 +101,7 @@
                                 <a class="page-scroll" href="<?= base_url('') ?>">Home</a>
                             </li>
                             <li>
-                                <a class="page-scroll" href="<?= base_url('index.php') ?>/donasi/lihat">Cari Anak</a>
+                                <a class="page-scroll" href="<?= base_url('index.php') ?>/anak/cari">Cari Anak</a>
                             </li>
                             <li>
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/donasi">Data Donasi</a>

@@ -188,7 +188,7 @@ class Pengguna extends CI_Controller {
                     } else if ($row->id_pengguna_group == 2) { //data entri
                         redirect('anak/cari');
                     } else if ($row->id_pengguna_group == 3) { //donatur
-                        redirect('donasi/lihat');
+                        redirect('anak/cari');
                     } else if ($row->id_pengguna_group == 4) { //pemerintah
                         redirect('anak/cari');
                     } else {
