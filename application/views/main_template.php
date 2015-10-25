@@ -44,7 +44,7 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <?php if ($this->session->userdata('id_pengguna_group') == 1) { ?>
+                    <?php if ($this->session->userdata('id_pengguna_group') == 1) {  //admin ?>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="hidden">
                                 <a href="<?= base_url('') ?>"></a>
@@ -68,7 +68,7 @@
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/logout">Logout</a>
                             </li>
                         </ul>
-                    <?php } else if ($this->session->userdata('id_pengguna_group') == 2) { ?>
+                    <?php } else if ($this->session->userdata('id_pengguna_group') == 2) { //data entri?>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="hidden">
                                 <a href="<?= base_url('') ?>"></a>
@@ -83,13 +83,16 @@
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/anak/cari">Cari Anak</a>
                             </li>
                             <li>
+                                <a class="page-scroll" href="<?= base_url('index.php') ?>/donasi/konfirmasi">Konfirmasi Donasi</a>
+                            </li>
+                            <li>
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/detail/<?= md5(sha1($this->session->userdata('id_pengguna')))?>"><?= $this->session->userdata('nama')?></a>
                             </li>
                             <li>
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/logout">Logout</a>
                             </li>
                         </ul>
-                    <?php } else if ($this->session->userdata('id_pengguna_group') == 3) { ?>
+                    <?php } else if ($this->session->userdata('id_pengguna_group') == 3) { //donatur?>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="hidden">
                                 <a href="<?= base_url('') ?>"></a>
@@ -98,14 +101,14 @@
                                 <a class="page-scroll" href="<?= base_url('') ?>">Home</a>
                             </li>
                             <li>
-                                <a class="page-scroll" href="<?= base_url('index.php') ?>/anak/cari">Cari Anak</a>
+                                <a class="page-scroll" href="<?= base_url('index.php') ?>/donasi/lihat">Cari Anak</a>
                             </li>
                             <li>
-                                <a class="page-scroll" href="<?= base_url('index.php') ?>/donasi/lihat">Data Donasi</a>
+                                <a class="page-scroll" href="<?= base_url('index.php') ?>/donasi">Data Donasi</a>
                             </li>
-                            <li>
+                            <!--<li>
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/lihat">Data Pengentri</a>
-                            </li>
+                            </li>-->
                             <li>
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/detail/<?= md5(sha1($this->session->userdata('id_pengguna')))?>"><?= $this->session->userdata('nama')?></a>
                             </li>
@@ -113,7 +116,7 @@
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/logout">Logout</a>
                             </li>
                         </ul>
-                    <?php } else if ($this->session->userdata('id_pengguna_group') == 4) { ?>
+                    <?php } else if ($this->session->userdata('id_pengguna_group') == 4) { //pemerintah?>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="hidden">
                                 <a href="<?= base_url('') ?>"></a>
@@ -125,7 +128,7 @@
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/anak/cari">Data Anak</a>
                             </li>
                             <li>
-                                <a class="page-scroll" href="<?= base_url('index.php') ?>/donasi/lihat">Data Donasi</a>
+                                <a class="page-scroll" href="<?= base_url('index.php') ?>/donasi/konfirmasi">Data Donasi</a>
                             </li>
                             <li>
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/lihat">Data Pengentri</a>

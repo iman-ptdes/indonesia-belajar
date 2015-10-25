@@ -98,6 +98,7 @@ $(document).ready(function() {
                 </br>
                 <input type="hidden" name="cari"  value="cari">
                 <button type="submit" class="btn btn-primary" name="submit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cari&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="submit" class="btn btn-primary" formaction="<?php echo site_url('anak/download2'); ?>" name="submit2">&nbsp;&nbsp;&nbsp;Download&nbsp;&nbsp;&nbsp;</button>
             </div>
         </div>
     </div>

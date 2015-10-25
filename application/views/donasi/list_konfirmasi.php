@@ -66,7 +66,11 @@
                                 Pesan : <?php echo isset($row->pesan) ? $row->pesan : ''; ?><br/>
                                 Donatur : <?php echo isset($row->nama_donatur) ? $row->nama_donatur : ''; ?></p>
                                 <p><a href="<?= base_url() ?>index.php/donasi/detail/<?= md5(sha1($row->id)) ?>" class="detail btn btn-primary"  title="Detail"><img src="<?= base_url('images') ?>/detail.png" style="width:15px;height:15px;"> Detail</a>&nbsp;&nbsp;
-                                            <a href="<?= base_url() ?>index.php/donasi/diterima/<?= md5(sha1($row->id)) ?>" class="btn btn-primary" >Sudah Diterima</a>&nbsp;&nbsp;&nbsp;</p>
+                                <?php if ($this->session->userdata('id_pengguna_group')=='2') {//data entri?>
+                                <a href="<?= base_url() ?>index.php/donasi/diterima/<?= md5(sha1($row->id)) ?>" class="btn btn-primary" >Sudah Diterima</a>&nbsp;&nbsp;&nbsp;
+                                <?php } ?>
+                                </p>
+                                
                             </div>
                                             
                                         </td> 
@@ -123,7 +127,9 @@
                                 Pesan : <?php echo isset($row->pesan) ? $row->pesan : ''; ?><br/>
                                 Donatur : <?php echo isset($row->nama_donatur) ? $row->nama_donatur : ''; ?></p>
                                 <p><a href="<?= base_url() ?>index.php/donasi/detail/<?= md5(sha1($row->id)) ?>" class="detail btn btn-primary"  title="Detail"><img src="<?= base_url('images') ?>/detail.png" style="width:15px;height:15px;"> Detail</a>&nbsp;&nbsp;
-                                            <a href="<?= base_url() ?>index.php/donasi/dibatalkan/<?= md5(sha1($row->id)) ?>" class="btn btn-primary">Batal Diterima</a>&nbsp;&nbsp;&nbsp;
+                                <?php if ($this->session->userdata('id_pengguna_group')=='2') {//data entri?>
+                                <a href="<?= base_url() ?>index.php/donasi/dibatalkan/<?= md5(sha1($row->id)) ?>" class="btn btn-primary">Batal Diterima</a>&nbsp;&nbsp;&nbsp;
+                                <?php } ?>
                             </div>
                                             
                                         </td> 

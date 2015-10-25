@@ -44,31 +44,31 @@ $(function() {
     Morris.Bar({
         element: 'morris-bar-chart',
         data: [{
-            y: '<?php echo $graph[0]['lokasi']?>',
+            y: '<?php echo substr($graph[0]['lokasi'],0,5);?>',
             a: <?php echo $graph[0][0]?>,
             b: <?php echo $graph[0][1]?>,
             c: <?php echo $graph[0][2]?>,
             d: <?php echo $graph[0][3]?>
         }, {
-            y: '<?php echo $graph[1]['lokasi']?>',
+            y: '<?php echo substr($graph[1]['lokasi'],0,5);?>',
             a: <?php echo $graph[1][0]?>,
             b: <?php echo $graph[1][1]?>,
             c: <?php echo $graph[1][2]?>,
             d: <?php echo $graph[1][3]?>
         }, {
-            y: '<?php echo $graph[2]['lokasi']?>',
+            y: '<?php echo substr($graph[2]['lokasi'],0,5);?>',
             a: <?php echo $graph[2][0]?>,
             b: <?php echo $graph[2][1]?>,
             c: <?php echo $graph[2][2]?>,
             d: <?php echo $graph[2][3]?>
         }, {
-            y: '<?php echo $graph[3]['lokasi']?>',
+            y: '<?php echo substr($graph[3]['lokasi'],0,5);?>',
             a: <?php echo $graph[3][0]?>,
             b: <?php echo $graph[3][1]?>,
             c: <?php echo $graph[3][2]?>,
             d: <?php echo $graph[3][3]?>
         }, {
-            y: '<?php echo $graph[4]['lokasi']?>',
+            y: '<?php echo substr($graph[4]['lokasi'],0,5);?>',
             a: <?php echo $graph[4][0]?>,
             b: <?php echo $graph[4][1]?>,
             c: <?php echo $graph[4][2]?>,
