@@ -77,6 +77,7 @@ $(function() {
         xkey: 'y',
         ykeys: ['a', 'b', 'c', 'd'],
         labels: ['SD dan Sederajat', 'SMP dan Sederajat', 'SMA dan Sederajat', 'Lainnya'],
+        barColors: ["#B21516", "#1531B2", "#1AB244", "#B29215"],
         hideHover: 'auto',
         resize: true
     });
@@ -122,11 +123,11 @@ $(function() {
             <div class="row">
                 <div class="col-md-4 col-xs-12">
                     <div style="margin-top:30px;">
-                        <h4>Total Donasi : <?php echo $total_donasi;?></h4>
-                        <h4>Jumlah Anak Putus Sekolah yang Terdata : <?php echo $total_anak;?></h4>
-                        <h4>5 Besar Anak Putus Sekolah Per Daerah</h4>
+                        <h4 class="font-biru">Total Donasi : <?php echo $total_donasi;?></h4>
+                        <h4 class="font-biru">Jumlah Anak Putus Sekolah yang Terdata : <?php echo $total_anak;?></h4>
+                        <h5 class="font-biru">"5 Daerah dengan jumlah anak putus sekolah terbanyak"</h5>
                         <div id="morris-bar-chart"></div>
-                        <center><img class="img-responsive" src="<?php echo base_url('images/indonesia-belajar.png')?>"></center>
+                        <!-- <center><img class="img-responsive" src="<?php echo base_url('images/indonesia-belajar.png')?>"></center> -->
                     </div>
                 </div>
                 <div class="col-md-8 col-xs-12">

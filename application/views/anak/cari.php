@@ -16,7 +16,7 @@
     });
 </script>
 
-<div class="col-lg-12">
+<div class="col-lg-10 col-lg-offset-1">
     <div class="page-header">
         <h2>Data Anak</h2>
     </div>
@@ -62,8 +62,8 @@
                 <?= form_dropdown('tingkat_sekolah', $tingkat_sekolah, isset($isi_tingkat_sekolah) ? $isi_tingkat_sekolah : '', "class='form-control'") ?>	
                 </br>
                 <input type="hidden" name="cari"  value="cari">
-                <button type="submit" class="btn btn-primary" name="submit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cari&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="submit" class="btn btn-primary" formaction="download2" name="submit2">&nbsp;&nbsp;&nbsp;Download&nbsp;&nbsp;&nbsp;</button>
+                <button type="submit" class="btn btn-primary" name="submit">&nbsp;&nbsp;Cari&nbsp;&nbsp;</button>&nbsp;&nbsp;
+                <button type="submit" class="btn btn-primary" formaction="download2" name="submit2">&nbsp;Download&nbsp;</button>
 
             </div>
         </div>
@@ -76,7 +76,91 @@
         </div>
 
         <div class="panel-body">
-            <div class="dataTable_wrapper" style="overflow: auto">
+            
+                <div class="dataTable_wrapper">
+                    <table class="table table-hover" id="data_anak">
+                        <thead>
+                            <tr>
+                                <th data-field="Anak"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if ($jumlah > 0) {
+                                $no = 1;
+                                foreach ($data as $row) {
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            
+                                            <div class="col-lg-2 thumbnail">
+                                                <?php
+                                                $hash_id = md5(sha1($row->id_anak));
+                                                $filename = "images/anak/" . $hash_id . ".jpg";
+                                                if (file_exists($filename)) {
+                                                    ?>
+                                                    <img id="img"  class="img-rounded" src="<?= base_url(); ?><?= $filename; ?>" alt="Foto" style="height:150px;" class="img-thumbnail">                
+                                                    <?php
+                                                } else {
+                                                    ?>
+                                                    <img id="img"  class="img-rounded" src="<?= base_url(); ?>images/pengguna/noimage.jpg" alt="Foto" style="height:150px;" class="img-thumbnail">                                        
+                                                    <?php
+                                                }
+                                                ?>
+                                            </div>
+                                            <div class="row">
+                                            <div class="col-lg-4">
+                                                <h4><?php echo isset($row->nama) ? $row->nama : ''; ?></h4>
+                                                <p style="font-size:12pt;">
+                                                    <?php echo isset($row->jenis_kelamin) ? $row->jenis_kelamin . ', ' : ''; ?><?php $umur = isset($row->tanggal_lahir) ? (date("Y") - (substr($row->tanggal_lahir, 0, 4))) : '';
+                                                    echo $umur . ' th' ?>
+                                                </p>
+                                                <p style="font-size:12pt;">
+                                                    <?php echo isset($row->alamat) ? $row->alamat : ''; ?>
+                                                </p>
+                                                <p style="font-size:12pt;">
+                                                    <?php echo isset($row->kota) ? $row->kota . ', ' : ''; ?><?php echo isset($row->provinsi) ? $row->provinsi : ''; ?><br/>
+                                                </p>
+                                                <p style="font-size:12pt;">
+                                                    Alasan Tidak Bersekolah : <?php echo isset($row->alasan) ? $row->alasan : '-'; ?>
+                                                </p>
+                                                
+                                            </div>    
+                                            <div class="col-lg-5">
+                                                <p style="font-size:12pt;">
+                                                    Status bersekolah : <?php echo isset($row->status_bersekolah) ? $row->status_bersekolah : '-'; ?><br/>
+                                                </p>
+                                                <p style="font-size:12pt;">
+                                                    Jenis sekolah terakhir : <?php echo isset($row->jenis_sekolah) ? $row->jenis_sekolah : '-'; ?><br/>
+                                                </p>
+                                                <p style="font-size:12pt;">
+                                                    Tingkat sekolah terakhir : <?php echo isset($row->tingkat_sekolah) ? $row->tingkat_sekolah : '-'; ?><br/>
+                                                </p>
+                                                
+                                            </div>    
+                                            <div class="col-lg-4">
+                                                <p>
+                                                    <a href="<?= base_url() ?>index.php/anak/detail/<?= md5(sha1($row->id_anak)) ?>" class="btn btn-primary">Detail</a>&nbsp;&nbsp;&nbsp;
+                                                    <?php if (($this->session->userdata('id_pengguna_group') == 2) OR ($this->session->userdata('id_pengguna_group') == 1)) { ?>
+                                                        <a href="<?= base_url() ?>index.php/anak/edit/<?= md5(sha1($row->id_anak)) ?>" class="btn btn-primary" >Edit</a>&nbsp;&nbsp;&nbsp;
+                                                        <a href="<?= base_url() ?>index.php/anak/hapus/<?= md5(sha1($row->id_anak)) ?>" class="btn btn-primary" onclick="return confirm('Yakin hapus data?');">Hapus</a>
+                                                    <?php } ?>
+                                                </p>
+                                            </div>
+                                                </div>
+                                        </td>
+                                    </tr>
+                                    <?php $no++; ?>    
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            
+            
+<!--            <div class="dataTable_wrapper" style="overflow: auto">
                 <table class="table table-striped table-bordered table-hover" id="data_anak">
                     <thead>
                         <tr>
@@ -128,7 +212,7 @@
                         ?>									
                     </tbody>
                 </table>
-            </div>
+            </div>-->
             <!-- /.table-responsive -->
 
         </div>

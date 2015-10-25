@@ -50,10 +50,12 @@
             </div>
             <?php 
             $id_pengguna = isset($row->id_pengguna) ? $row->id_pengguna : '';
-            if ($this->session->userdata('id_pengguna') == $id_pengguna ){ ?>
+            if (($this->session->userdata('id_pengguna') == $id_pengguna ) OR ($this->session->userdata('id_pengguna_group') == 1)){ ?>
                  <input type="file" id="foto" name="foto"></br>
+                <?php  if  ($this->session->userdata('id_pengguna_group') == 2){ ?>
                  <a class="btn btn-success" href="<?= base_url() ?>index.php/pengguna/rekening">Edit Data Rekening</a></br></br>
             <?php } ?>
+                  <?php } ?>
             
         </div>
 
@@ -74,13 +76,15 @@
                 <tr><td>Provinsi</td><td><?= isset($row->provinsi) ? $row->provinsi : '' ?></td></tr>
                 <tr><td>Jenis Identitas</td><td><?= isset($row->jenis_identitas) ? $row->jenis_identitas : '' ?></td></tr>
                 <tr><td>Nomor Identitas</td><td><?= isset($row->no_identitas) ? $row->no_identitas : '' ?></td></tr>
+                <?php if  ($this->session->userdata('id_pengguna_group') == 2) { ?>
                 <tr><td>Nama Bank</td><td><?= isset($row->nama_bank) ? $row->nama_bank : '' ?></td></tr>
                 <tr><td>Nomor Rekening</td><td><?= isset($row->no_rekening) ? $row->no_rekening : '' ?></td></tr>
+                <?php } ?>
 
             </table>
             <?php 
             $id_pengguna = isset($row->id_pengguna) ? $row->id_pengguna : '';
-            if ($this->session->userdata('id_pengguna') == $id_pengguna ){ ?>
+            if (($this->session->userdata('id_pengguna') == $id_pengguna ) OR ($this->session->userdata('id_pengguna_group') == 1)) { ?>
                 <a class="btn btn-success" href="<?= base_url() ?>index.php/pengguna/edit/<?= $hash_id ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                 
             <?php } ?>
