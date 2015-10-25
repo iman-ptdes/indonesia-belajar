@@ -27,19 +27,40 @@
 
     });
 </script> 
-
+<style>   
+.img-responsive img:hover {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform:translateZ(0) scale(1.20); /* Safari and Chrome */
+    -moz-transform:scale(1.20); /* Firefox */
+    -ms-transform:scale(1.20); /* IE 9 */
+    -o-transform:translatZ(0) scale(1.20); /* Opera */
+    transform:translatZ(0) scale(1.20);
+}
+</style>
 <div class="col-lg-10 ">
     <div class="page-header">
         <h4><?php echo isset($row->nama) ? $row->nama : ''; ?></h4>
     </div>
-
+    <div class="col-lg-6 thumbnail">
+        <label>Data Donasi</label>
+        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+            <tr><td>Donasi untuk</td><td><b><?php echo isset($row->nama_anak)?$row->nama_anak:''?></b></td></tr>
+            <tr><td>Tanggal Donasi</td><td> <?php echo isset($row->tgl_donasi)?date('d-m-Y',strtotime($row->tgl_donasi)):''; ?></td></tr>
+            <tr><td>Jumlah</td><td><?php echo isset($row->jumlah)?number_format($row->jumlah,0,',','.'):''; ?></td></tr>
+            <tr><td>Pesan</td><td><?php echo isset($row->pesan)?$row->pesan:''; ?></td></tr>
+            <tr><td>Donatur</td><td><?php echo isset($row->nama_donatur) ? $row->nama_donatur : ''; ?></td></tr>
+        </table>
+    </div>
     <div class="col-lg-5 ">
         <div class="form-group">
             <?php
             $filename = "images/donasi/" . $hash_id . ".jpg";
             if (file_exists($filename)) {
                 ?>
+                <a href="<?= base_url(); ?><?= $filename; ?>" alt="klik untuk melihat gambar" target="_blank">
                 <img id="img"  class="img-rounded img-responsive" src="<?= base_url(); ?><?= $filename; ?>" alt="Foto" style="height:200px;" class="img-thumbnail">
+                </a>
                 <?php
             } else {
                 ?>
@@ -52,17 +73,6 @@
         <a class="btn btn-success" href="<?= base_url() ?>index.php/donasi/">Semua Data Donasi</a>
         <a class="btn btn-success" href="<?= base_url() ?>index.php/donasi/edit/<?= $hash_id ?>">Edit Data Donasi</a>
        
-    </div>
-    
-    <div class="col-lg-6 thumbnail">
-        <label>Data Donasi</label>
-        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-            <tr><td>Donasi untuk</td><td><b><?php echo isset($row->nama_anak)?$row->nama_anak:''?></b></td></tr>
-            <tr><td>Tanggal Donasi</td><td> <?php echo isset($row->tgl_donasi)?date('d-m-Y',strtotime($row->tgl_donasi)):''; ?></td></tr>
-            <tr><td>Jumlah</td><td><?php echo isset($row->jumlah)?number_format($row->jumlah,0,',','.'):''; ?></td></tr>
-            <tr><td>Pesan</td><td><?php echo isset($row->pesan)?$row->pesan:''; ?></td></tr>
-            <tr><td>Donatur</td><td><?php echo isset($row->nama_donatur) ? $row->nama_donatur : ''; ?></td></tr>
-        </table>
     </div>
 </div>
 

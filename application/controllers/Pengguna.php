@@ -186,6 +186,8 @@ class Pengguna extends CI_Controller {
                         redirect('donasi/lihat');
                     } else if ($row->id_pengguna_group == 4) { //pemerintah
                         redirect('anak/cari');
+                    } else {
+                        redirect('pengguna/tambah');
                     }
                     break;
                 }

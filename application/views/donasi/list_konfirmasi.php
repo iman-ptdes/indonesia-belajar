@@ -10,10 +10,10 @@
 
 <script>
     $(document).ready(function () {
-        $('#data_konfirmasi').DataTable({
+        $('#tabel_konfirmasi').DataTable({
             responsive: true
         });
-        $('#data_donasi').DataTable({
+        $('#tabel_donasi').DataTable({
             responsive: true
         });
     });
@@ -31,7 +31,7 @@
             <div class="tab-pane active" id="data_konfirmasi">
             <div class="panel-body">
                 <div class="dataTable_wrapper">
-                    <table class="table table-striped table-bordered table-hover" id="data_konfirmasi">
+                    <table class="table table-striped table-bordered table-hover" id="tabel_konfirmasi">
                         <thead>
                             <tr>
                                 <th data-field="Donasi">Konfirmasi Donasi</th>
@@ -92,7 +92,7 @@
         <div class="tab-pane" id="data_donasi">
             <div class="panel-body">
                 <div class="dataTable_wrapper">
-                    <table class="table table-striped table-bordered table-hover" id="data_donasi">
+                    <table class="table table-striped table-bordered table-hover" id="tabel_donasi">
                         <thead>
                             <tr>
                                 <th data-field="Masuk">Donasi Masuk</th>

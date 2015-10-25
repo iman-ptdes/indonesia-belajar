@@ -40,21 +40,7 @@
                                 foreach ($data as $row) {
                                     ?>
                                     <tr>
-                                        <td><div class="col-lg-3 thumbnail">
-                                <?php
-                                $hash_id = md5(sha1($row->id));
-                                $filename = "images/anak/" . $hash_id . ".jpg";
-                                if (file_exists($filename)) {
-                                        ?>
-                                        <img id="img"  class="img-rounded" src="<?= base_url(); ?><?= $filename; ?>" alt="Foto" style="height:200px;" class="img-thumbnail">                
-                                        <?php
-                                } else {
-                                        ?>
-                                        <img id="img"  class="img-rounded" src="<?= base_url(); ?>images/pengguna/noimage.jpg" alt="Foto" style="height:200px;" class="img-thumbnail">                                        
-                                        <?php
-                                }
-                                ?>
-                            </div>
+                                        <td>
                             <div class="col-lg-6">
                                 <h4><?php echo isset($row->nama_anak) ? $row->nama_anak : ''; ?></h4>
                                 <p style="font-size:12pt;">Tanggal Donasi : <?php echo isset($row->tgl_donasi) ? date('d-m-Y',strtotime($row->tgl_donasi)) : ''; ?><br/>
@@ -66,7 +52,23 @@
                                             <a href="<?= base_url() ?>index.php/donasi/edit/<?= md5(sha1($row->id)) ?>" class="edit btn btn-primary"  title="Edit"><img src="<?= base_url('images') ?>/edit.png" style="width:15px;height:15px;"> Ubah</a>&nbsp;&nbsp;&nbsp;
                                             <a href="<?= base_url() ?>index.php/donasi/delete/<?= md5(sha1($row->id)) ?>" class="delete btn btn-primary"  title="Delete" onclick="return confirm('Yakin hapus data?');"><img src="<?= base_url('images') ?>/delete.png" style="width:15px;height:15px;"> Hapus</a>
                                             <?php } ?></p>
-                            </div>    </td>
+                            </div> <div class="col-lg-3 thumbnail">
+                                <?php
+                                $hash_id = md5(sha1($row->id));
+                                $filename = "images/donasi/" . $hash_id . ".jpg";
+                                if (file_exists($filename)) {
+                                        ?>
+                                <a href="<?= base_url(); ?><?= $filename; ?>" alt="klik untuk melihat gambar" target="_blank">
+                                        <img id="img"  class="img-rounded" src="<?= base_url(); ?><?= $filename; ?>" alt="Foto" style="height:200px;" class="img-thumbnail">                
+                                </a>
+                                        <?php
+                                } else {
+                                        ?>
+                                        <img id="img"  class="img-rounded" src="<?= base_url(); ?>images/pengguna/noimage.jpg" alt="Foto" style="height:200px;" class="img-thumbnail">                                        
+                                        <?php
+                                }
+                                ?>
+                            </div>   </td>
                                     </tr>
                                     <?php $no++; ?>    
                                     <?php
