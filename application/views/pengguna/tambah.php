@@ -1,5 +1,17 @@
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function(){ 
+$("#jenis").hide();
+                $("#group_pengguna").live("change",function(){
+                    var pilihan = $(this).val();
+                    if(pilihan == 'Pemerintah'){
+                        $("#jenis").hide();
+                    }else{
+                        $("#jenis").show();           
+                    }
+                }); 
+
+
+        
         $('#formDaftar').bootstrapValidator({
             message: 'isian tidak valid',
             feedbackIcons: {
@@ -227,10 +239,11 @@
                 <div class="form-group">
                     <label class="col-lg-5 control-label">Jenis Pengguna</label>
                     <div class="col-lg-3">
-                        <?= form_dropdown('group_pengguna', $group_pengguna, '', "class='form-control'") ?>
+                        <?= form_dropdown('group_pengguna', $group_pengguna, '', "class='form-control'  id ='group_pengguna'") ?>
                     </div>
-                    <div class="col-lg-3">
-                        <?= form_dropdown('jenis_pengguna', $jenis_pengguna, '', "class='form-control'") ?>
+                    <div class="col-lg-3" >
+                        <div id="jenis">
+                        <?= form_dropdown('jenis_pengguna', $jenis_pengguna, '', "class='form-control' ") ?></div>
                     </div>
                 </div>
                 <div class="form-group">

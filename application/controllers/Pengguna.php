@@ -227,13 +227,18 @@ class Pengguna extends CI_Controller {
             } else {
                 $status = 1;
             }
+            if ($this->input->post('group_pengguna')==4){
+                $jenis_pengguna = 'Instansi Pemerintah';
+            }else {
+                $jenis_pengguna = $this->input->post('jenis_pengguna');
+            }
             $data = array(
                 'nama' => $this->input->post('nama'),
                 'email' => $this->input->post('email'),
                 'username' => $this->input->post('username'),
                 'password' => sha1(sha1(md5($this->input->post('password')))),
                 'id_pengguna_group' => $this->input->post('group_pengguna'),
-                'jenis_pengguna' => $this->input->post('jenis_pengguna'),
+                'jenis_pengguna' => $jenis_pengguna,
                 'telepon' => $this->input->post('telepon'),
                 'alamat' => $this->input->post('alamat'),
                 'kota' => $this->input->post('kota'),

@@ -133,6 +133,15 @@ $(function() {
                 <div class="col-md-8 col-xs-12">
                     <script type="text/javascript">
                         $(document).ready(function () {
+                            $("#group_pengguna").on("change",function(){
+                    var pilihan = $(this).find(':selected').text();
+                    if(pilihan == 'Pemerintah'){
+                        $("#jenis").hide();
+                    }else{
+                        $("#jenis").show();           
+                    }
+                }); 
+                            
                             $('#formDaftar').bootstrapValidator({
                                 message: 'isian tidak valid',
                                 feedbackIcons: {
@@ -354,9 +363,9 @@ $(function() {
                                     <div class="form-group">
                                         <label class="col-lg-4 control-label font-biru">Jenis Pengguna</label>
                                         <div class="col-lg-3">
-                                            <?= form_dropdown('group_pengguna', $group_pengguna, '', "class='form-control'") ?>
+                                            <?= form_dropdown('group_pengguna', $group_pengguna, '', "class='form-control' id='group_pengguna'") ?>
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-3" id="jenis">
                                             <?= form_dropdown('jenis_pengguna', $jenis_pengguna, '', "class='form-control'") ?>
                                         </div>
                                     </div>
