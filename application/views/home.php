@@ -125,7 +125,7 @@ $(function() {
                     <div style="margin-top:30px;">
                         <h4 class="font-biru">Total Donasi : <?php echo $total_donasi;?></h4>
                         <h4 class="font-biru">Jumlah Anak Putus Sekolah yang Terdata : <?php echo $total_anak;?></h4>
-                        <h3 class="font-biru">"5 Daerah dengan jumlah anak putus sekolah terbanyak"</h3>
+                        <h5 class="font-biru">"5 Daerah dengan jumlah anak putus sekolah terbanyak"</h5>
                         <div id="morris-bar-chart"></div>
                         <!-- <center><img class="img-responsive" src="<?php echo base_url('images/indonesia-belajar.png')?>"></center> -->
                     </div>
