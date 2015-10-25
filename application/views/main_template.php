@@ -106,9 +106,9 @@
                             <li>
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/donasi">Data Donasi</a>
                             </li>
-                            <!--<li>
+                            <li>
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/lihat">Data Pengentri</a>
-                            </li>-->
+                            </li>
                             <li>
                                 <a class="page-scroll" href="<?= base_url('index.php') ?>/pengguna/detail/<?= md5(sha1($this->session->userdata('id_pengguna')))?>"><?= $this->session->userdata('nama')?></a>
                             </li>
