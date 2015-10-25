@@ -44,31 +44,31 @@ $(function() {
     Morris.Bar({
         element: 'morris-bar-chart',
         data: [{
-            y: '<?php echo $graph[0]['lokasi']?>',
+            y: '<?php echo substr($graph[0]['lokasi'],0,5);?>',
             a: <?php echo $graph[0][0]?>,
             b: <?php echo $graph[0][1]?>,
             c: <?php echo $graph[0][2]?>,
             d: <?php echo $graph[0][3]?>
         }, {
-            y: '<?php echo $graph[1]['lokasi']?>',
+            y: '<?php echo substr($graph[1]['lokasi'],0,5);?>',
             a: <?php echo $graph[1][0]?>,
             b: <?php echo $graph[1][1]?>,
             c: <?php echo $graph[1][2]?>,
             d: <?php echo $graph[1][3]?>
         }, {
-            y: '<?php echo $graph[2]['lokasi']?>',
+            y: '<?php echo substr($graph[2]['lokasi'],0,5);?>',
             a: <?php echo $graph[2][0]?>,
             b: <?php echo $graph[2][1]?>,
             c: <?php echo $graph[2][2]?>,
             d: <?php echo $graph[2][3]?>
         }, {
-            y: '<?php echo $graph[3]['lokasi']?>',
+            y: '<?php echo substr($graph[3]['lokasi'],0,5);?>',
             a: <?php echo $graph[3][0]?>,
             b: <?php echo $graph[3][1]?>,
             c: <?php echo $graph[3][2]?>,
             d: <?php echo $graph[3][3]?>
         }, {
-            y: '<?php echo $graph[4]['lokasi']?>',
+            y: '<?php echo substr($graph[4]['lokasi'],0,5);?>',
             a: <?php echo $graph[4][0]?>,
             b: <?php echo $graph[4][1]?>,
             c: <?php echo $graph[4][2]?>,
@@ -125,7 +125,7 @@ $(function() {
                     <div style="margin-top:30px;">
                         <h4 class="font-biru">Total Donasi : <?php echo $total_donasi;?></h4>
                         <h4 class="font-biru">Jumlah Anak Putus Sekolah yang Terdata : <?php echo $total_anak;?></h4>
-                        <h3 class="font-biru">"5 Daerah dengan jumlah anak putus sekolah terbanyak"</h3>
+                        <h5 class="font-biru">"5 Daerah dengan jumlah anak putus sekolah terbanyak"</h5>
                         <div id="morris-bar-chart"></div>
                         <!-- <center><img class="img-responsive" src="<?php echo base_url('images/indonesia-belajar.png')?>"></center> -->
                     </div>
