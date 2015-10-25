@@ -87,6 +87,7 @@ class Form_option {
             'NIS' => 'NIS',
             'NIP' => 'NIP',
             'NPWP' => 'NPWP',
+            'Lainnya' => 'Lainnya',
         );
         return $option;
     }
