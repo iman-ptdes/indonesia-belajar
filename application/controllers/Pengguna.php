@@ -73,6 +73,11 @@ class Pengguna extends CI_Controller {
             echo "<script>location.href = '" . base_url() . "';
 		</script>";
         }
+        if ($this->session->userdata('id_pengguna_group') != 2) {
+             $query2 = $this->db_model->get('anak', '*',  array("md5(sha1(id_pengguna))" => $hash_id));
+              $data['data'] = $query2->result();
+              $data['jumlah'] = $query2->num_rows();
+        }
 
         $query = $this->db_model->get('pengguna', '*', array("md5(sha1(id_pengguna))" => $hash_id));
         $data['row'] = $query->row();
